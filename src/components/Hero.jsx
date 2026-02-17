@@ -174,8 +174,20 @@ const Hero = ({ theme }) => {
                 {/* IMAGE SECTION: 5 Columns on Mobile, 6 on Desktop */}
                 <motion.div
                     initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.8, delay: 0.2 }}
+                    animate={{
+                        opacity: 1,
+                        scale: 1,
+                        y: [-10, 10, -10]
+                    }}
+                    transition={{
+                        opacity: { duration: 0.8, delay: 0.2 },
+                        scale: { duration: 0.8, delay: 0.2 },
+                        y: {
+                            duration: 6,
+                            repeat: Infinity,
+                            ease: "easeInOut"
+                        }
+                    }}
                     className="flex justify-center relative p-1 md:p-[150px] col-span-5 md:col-span-6"
                 >
                     <div
@@ -194,12 +206,17 @@ const Hero = ({ theme }) => {
                         />
 
                         {/* Static Subtle Glow Background (Base) */}
-                        <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-brown/10 to-transparent dark:from-neon-green/5 dark:to-transparent blur-lg md:blur-2xl -z-10"></div>
+                        <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-brown/10 to-transparent dark:from-neon-green/20 dark:to-transparent blur-lg md:blur-3xl -z-10 animate-pulse"></div>
 
                         <img
                             src={Img}
                             alt="Parasa Balaji Sri Ram"
                             className="w-full h-full object-cover rounded-full border-2 md:border-4 border-white/50 dark:border-neon-green/30 shadow-lg md:shadow-2xl relative z-10"
+                            style={{
+                                boxShadow: theme === 'dark'
+                                    ? '0 0 40px rgba(34, 197, 94, 0.2)'
+                                    : '0 0 30px rgba(180, 140, 90, 0.2)'
+                            }}
                         />
                     </div>
                 </motion.div>

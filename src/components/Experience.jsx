@@ -34,7 +34,7 @@ const Experience = () => {
                         <span className="text-sm font-bold text-light-brown dark:text-neon-green uppercase tracking-wider">2023 - Present</span>
                         <h3 className="text-2xl font-bold text-charcoal dark:text-white mt-2">B.Tech in Computer Science & Engineering</h3>
                         <p className="text-lg font-medium text-brown dark:text-gray-300">Lovely Professional University, Punjab</p>
-                        <p className="mt-2 text-gray-700 dark:text-gray-400">CGPA: 8.09</p>
+                        <p className="mt-2 text-gray-700 dark:text-gray-400">CGPA: 8.13</p>
                     </motion.div>
 
                     {/* Education 2 */}

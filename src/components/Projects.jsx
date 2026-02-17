@@ -1,8 +1,6 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Github, ExternalLink } from 'lucide-react';
-import SpotlightCard from './SpotlightCard';
-import TiltCard from './TiltCard';
+import React, { useRef, useState, useEffect } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { Github, ExternalLink, ArrowUpRight, ArrowDown } from 'lucide-react';
 import byodImg from '../assets/byod.png';
 import smartParkingImg from '../assets/smart_parking.png';
 import codeconnectImg from '../assets/codeconnect.png';
@@ -11,8 +9,8 @@ import photoboothImg from '../assets/photobooth.png';
 const projects = [
     {
         title: "CodeConnect",
-        description: "A full-stack MERN coding platform helping users master algorithms and connect with companies. Features real-time code execution, problem categorization, and interview prep.",
-        tags: ["React", "Node.js", "Express", "MongoDB", "JWT"],
+        description: "A full-stack MERN coding platform helping users master algorithms and connect with companies. Features real-time code execution and interview prep.",
+        tags: ["React", "Node.js", "Express", "MongoDB"],
         link: "https://github.com/Balaji-Sri-Ram/CodeConnect",
         liveLink: "https://code-connect-sand-eta.vercel.app",
         date: "December 2025",
@@ -20,106 +18,169 @@ const projects = [
     },
     {
         title: "Smart Parking System",
-        description: "Advanced web-based parking system enabling slot booking, secure payments, and QR-based entry. Features user & admin dashboards and real-time availability.",
-        tags: ["Python Flask", "HTML/CSS", "JS", "SQLite"],
-        link: "https://github.com/Balaji-Sri-Ram/Smart-Parking-System",
+        description: "A smart parking solution using QR codes to manage vehicle entry and exit efficiently. Features real-time database tracking for parking slots.",
+        tags: ["Python", "HTML", "CSS", "SQL"],
+        link: "#",
+        liveLink: null,
         date: "October 2025",
         image: smartParkingImg
     },
     {
-        title: "BYOD Management System",
-        description: "Secure web-based BYOD management system for classrooms to monitor and control student devices in real time. Features centralized dashboards and enhances digital classroom safety.",
-        tags: ["HTML", "CSS", "Tailwind", "JS", "PHP", "MySQL"],
-        link: "https://github.com/Balaji-Sri-Ram/BYOD",
-        date: "April 2025",
-        image: byodImg
-    },
-    {
         title: "PhotoBooth Chatbot",
-        description: "An engaging AI chatbot for photo booths that interacts with users in real-time. Built with a Python backend and responsive frontend for seamless conversational experiences.",
-        tags: ["Python", "Flask", "HTML/CSS", "JavaScript", "Dialogflow"],
+        description: "An engaging AI chatbot for photo booths that interacts with users in real-time. Built with a Python backend and responsive frontend.",
+        tags: ["Python", "Flask", "Dialogflow"],
         link: "https://github.com/Balaji-Sri-Ram/PhotoBooth-Chatbot",
         liveLink: "https://photo-booth-chatbot.vercel.app",
-        date: "November 2025",
+        date: "November 2024",
         image: photoboothImg
+    },
+    {
+        title: "BYOD Management System",
+        description: "Secure web-based BYOD management system for classrooms to monitor and control student devices in real time.",
+        tags: ["PHP", "MySQL", "Tailwind", "JS"],
+        link: "https://github.com/Balaji-Sri-Ram/BYOD",
+        liveLink: null,
+        date: "April 2025",
+        image: byodImg
     }
 ];
 
-const Projects = ({ theme }) => {
-    const spotlightColor = theme === 'light'
-        ? "rgba(180, 140, 90, 0.4)"
-        : "rgba(0, 255, 136, 0.4)";
-
+const ProjectCard = ({ project, index }) => {
     return (
-        <section id="projects" className="py-20 bg-cream dark:bg-dark-bg transition-colors duration-300">
-            <div className="container">
-                <motion.h2
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    className="text-4xl font-bold mb-16 text-center text-charcoal dark:text-white"
-                >
-                    My Projects
-                </motion.h2>
+        // Adjusted Dimensions: Increased Width significantly
+        // md:w-[700px] lg:w-[750px]
+        <div className="relative w-[85vw] md:w-[700px] lg:w-[750px] h-[50vh] md:h-[500px] flex-shrink-0 rounded-2xl overflow-hidden bg-white dark:bg-white/5 border border-brown/10 dark:border-white/10 shadow-xl backdrop-blur-sm group hover:border-black dark:hover:border-neon-green transition-all duration-500">
+            {/* Background Image - Adjusted coverage */}
+            <div className="absolute inset-0 h-[45%] md:h-[60%] overflow-hidden">
+                <div className="absolute inset-0 bg-brown/5 dark:bg-black/20 group-hover:bg-transparent transition-colors duration-500 z-10" />
+                <img
+                    src={project.image}
+                    alt={project.title}
+                    className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 ease-out"
+                />
+            </div>
 
-                <div className="grid md:grid-cols-2 gap-10">
-                    {projects.map((project, index) => (
-                        <motion.div
-                            key={index}
-                            initial={{ opacity: 0, y: 40 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.5, delay: index * 0.2 }}
-                            viewport={{ once: true }}
-                            className="h-full"
-                        >
-                            <TiltCard className="h-full">
-                                <SpotlightCard
-                                    spotlightColor={spotlightColor}
-                                    className="h-full flex flex-col group relative bg-white dark:bg-card-dark rounded-2xl overflow-hidden shadow-lg border border-gray-100 dark:border-white/5 hover:border-brown dark:hover:border-neon-green/50 transition-all"
+            {/* Content Container - Bottom 40% */}
+            <div className="absolute bottom-0 left-0 right-0 h-[55%] md:h-[45%] bg-white dark:bg-[#121212] border-t border-brown/10 dark:border-white/10 p-5 md:p-8 flex flex-col justify-between z-20 group-hover:h-[60%] md:group-hover:h-[50%] transition-all duration-300">
+                <div>
+                    <div className="flex items-center justify-between mb-3">
+                        <span className="text-brown dark:text-neon-green font-mono text-sm tracking-wide font-semibold">
+                            {project.date}
+                        </span>
+                        <div className="flex gap-4">
+                            {project.liveLink && (
+                                <a
+                                    href={project.liveLink}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="group/link relative text-charcoal/70 dark:text-white/70 hover:text-black dark:hover:text-neon-green transition-colors"
                                 >
-                                    <div className="h-64 bg-beige dark:bg-[#202020] relative overflow-hidden group-hover:scale-[1.02] transition-transform duration-500 flex-shrink-0">
-                                        <div className="absolute inset-0 bg-black/10 dark:bg-black/20 group-hover:bg-black/0 transition-colors z-10"></div>
-                                        <img
-                                            src={project.image}
-                                            alt={project.title}
-                                            className="w-full h-full object-cover object-top"
-                                        />
-                                    </div>
+                                    <ArrowUpRight size={20} />
+                                    <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 text-xs text-cream bg-charcoal dark:bg-black rounded opacity-0 group-hover/link:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap">
+                                        Live Link
+                                    </span>
+                                </a>
+                            )}
+                            <a
+                                href={project.link}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="group/link relative text-charcoal/70 dark:text-white/70 hover:text-black dark:hover:text-neon-green transition-colors"
+                            >
+                                <Github size={20} />
+                                <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 text-xs text-cream bg-charcoal dark:bg-black rounded opacity-0 group-hover/link:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap">
+                                    GitHub
+                                </span>
+                            </a>
+                        </div>
+                    </div>
 
-                                    <div className="p-8 flex flex-col flex-grow">
-                                        <div className="flex justify-between items-start mb-4">
-                                            <div>
-                                                <span className="text-sm text-light-brown dark:text-neon-green font-mono">{project.date}</span>
-                                                <h3 className="text-2xl font-bold text-charcoal dark:text-white mt-1 group-hover:text-brown dark:group-hover:text-neon-green transition-colors">{project.title}</h3>
-                                            </div>
-                                            <div className="flex gap-4">
-                                                {project.liveLink && (
-                                                    <a href={project.liveLink} target="_blank" rel="noopener noreferrer" className="text-charcoal dark:text-gray-400 hover:text-brown dark:hover:text-neon-green transition-colors relative z-10" title="Live Demo">
-                                                        <ExternalLink size={24} />
-                                                    </a>
-                                                )}
-                                                <a href={project.link} target="_blank" rel="noopener noreferrer" className="text-charcoal dark:text-gray-400 hover:text-brown dark:hover:text-neon-green transition-colors relative z-10" title="View Code">
-                                                    <Github size={24} />
-                                                </a>
-                                            </div>
-                                        </div>
+                    <h2 className="text-2xl md:text-3xl font-bold text-charcoal dark:text-white mb-3 leading-tight group-hover:text-black dark:group-hover:text-neon-green transition-colors">
+                        {project.title}
+                    </h2>
 
-                                        <p className="text-gray-600 dark:text-gray-400 mb-6 h-[4.5rem] overflow-hidden">
-                                            {project.description}
-                                        </p>
+                    <p className="text-brown/80 dark:text-gray-400 text-sm md:text-base line-clamp-2 md:line-clamp-3 leading-relaxed mb-4">
+                        {project.description}
+                    </p>
+                </div>
 
-                                        <div className="flex flex-wrap gap-2">
-                                            {project.tags.map(tag => (
-                                                <span key={tag} className="text-xs font-semibold px-3 py-1 bg-charcoal dark:bg-neon-green/10 text-white dark:text-neon-green rounded-full border border-transparent dark:border-neon-green/20">
-                                                    {tag}
-                                                </span>
-                                            ))}
-                                        </div>
-                                    </div>
-                                </SpotlightCard>
-                            </TiltCard>
-                        </motion.div>
+                <div className="flex flex-wrap gap-2">
+                    {project.tags.map(tag => (
+                        <span key={tag} className="text-xs font-medium px-3 py-1 bg-black dark:bg-neon-green/5 text-white dark:text-neon-green rounded-full border-none dark:border dark:border-neon-green/20 transition-colors">
+                            {tag}
+                        </span>
                     ))}
                 </div>
+            </div>
+        </div>
+    );
+};
+
+const Projects = () => {
+    const targetRef = useRef(null);
+    const { scrollYProgress } = useScroll({
+        target: targetRef,
+    });
+
+    // Detect screen width to adjust scroll range
+    const [scrollRange, setScrollRange] = useState(["1%", "-60%"]);
+
+    useEffect(() => {
+        const updateRange = () => {
+            // Mobile: Scroll further to reveal the last card completely
+            if (window.innerWidth < 768) {
+                // Adjusted to -72% to center the last project card on mobile
+                setScrollRange(["1%", "-72%"]);
+            } else {
+                // Desktop: Keep exactly as requested
+                setScrollRange(["1%", "-60%"]);
+            }
+        };
+
+        updateRange(); // Initial check
+        window.addEventListener('resize', updateRange);
+        return () => window.removeEventListener('resize', updateRange);
+    }, []);
+
+    const x = useTransform(scrollYProgress, [0, 1], scrollRange);
+
+    return (
+        <section ref={targetRef} id="projects" className="relative h-[300vh] bg-white dark:bg-black transition-colors duration-300">
+            <div className="sticky top-0 h-screen flex items-center overflow-hidden">
+
+                {/* Large Background Title */}
+                <div className="absolute top-1/2 left-10 transform -translate-y-1/2 z-0">
+                    <h2 className="text-[12vw] font-bold text-brown/[0.05] dark:text-white/[0.03] select-none leading-none tracking-tighter transition-colors duration-300">
+                        SELECTED <br /> WORKS
+                    </h2>
+                </div>
+
+                {/* Horizontal Scroll Track */}
+                <motion.div
+                    style={{ x }}
+                    className="flex gap-8 md:gap-12 pl-[5vw] pr-[50vw] items-center z-10"
+                >
+                    {/* Intro Card */}
+                    <div className="w-[85vw] md:w-[400px] lg:w-[450px] flex-shrink-0 flex flex-col justify-center text-charcoal dark:text-white p-6 md:p-12 transition-colors duration-300">
+                        <div className="w-12 h-1 bg-brown dark:bg-neon-green mb-6 transition-colors duration-300"></div>
+                        {/* Increased Font Size */}
+                        <h3 className="text-5xl md:text-7xl font-bold leading-tight mb-6">
+                            Recent <br />
+                            <span className="text-brown/60 dark:text-gray-500 transition-colors duration-300">Projects</span>
+                        </h3>
+                        <p className="text-brown/80 dark:text-gray-400 text-lg mb-8 transition-colors duration-300">
+                            Solving complex problems with elegant code.
+                        </p>
+                        <div className="flex items-center gap-2 text-sm font-mono animate-blink text-brown dark:text-[#00cc6a] transition-colors duration-300">
+                            <span>SCROLL TO EXPLORE</span>
+                            <ArrowDown className="w-4 h-4" />
+                        </div>
+                    </div>
+
+                    {projects.map((project, index) => (
+                        <ProjectCard key={index} project={project} index={index} />
+                    ))}
+                </motion.div>
             </div>
         </section>
     );

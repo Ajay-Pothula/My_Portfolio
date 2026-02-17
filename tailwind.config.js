@@ -23,12 +23,33 @@ export default {
             },
             animation: {
                 scroll: 'scroll 20s linear infinite',
+                'bounce-x': 'bounce-x 1s infinite',
+                'blink-green': 'blink-green 4s infinite ease-in-out',
+                'blink': 'blink 4s infinite ease-in-out',
             },
             keyframes: {
                 scroll: {
                     '0%': { transform: 'translateX(0)' },
                     '100%': { transform: 'translateX(-50%)' },
                 },
+                'bounce-x': {
+                    '0%, 100%': {
+                        transform: 'translateX(0)',
+                        animationTimingFunction: 'cubic-bezier(0.8, 0, 1, 1)'
+                    },
+                    '50%': {
+                        transform: 'translateX(25%)',
+                        animationTimingFunction: 'cubic-bezier(0, 0, 0.2, 1)'
+                    },
+                },
+                'blink-green': {
+                    '0%, 100%': { opacity: '0.2', color: '#00cc6a' },
+                    '50%': { opacity: '1', color: '#00cc6a' }
+                },
+                'blink': {
+                    '0%, 100%': { opacity: '0.2' },
+                    '50%': { opacity: '1' }
+                }
             }
         },
     },
