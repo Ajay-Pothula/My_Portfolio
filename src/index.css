@@ -32,29 +32,28 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-brown dark:bg-neon-green/50 rounded-full;
+  @apply bg-brown dark:bg-primary-cyan/50 rounded-full;
   /* Note: primary-color variable usage might be inconsistent, using direct colors is safer with Tailwind utilities */
   background-color: #4A3B32;
 }
 
 .dark ::-webkit-scrollbar-thumb {
-  background-color: #00ff88;
+  background-color: #00F0FF;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-light-brown dark:bg-neon-green;
+  @apply bg-light-brown dark:bg-primary-cyan;
 }
 
 /* Cursor Follower Styles */
 .cursor-follower {
   pointer-events: none;
   position: fixed;
-  top: 0;
-  left: 0;
+  top: -50px;
+  left: -50px;
   width: 150px;
   height: 150px;
-  background: radial-gradient(circle, rgba(0, 255, 136, 0.25) 0%, rgba(0, 255, 136, 0.1) 40%, rgba(0, 0, 0, 0) 70%);
-  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(0, 240, 255, 0.25) 0%, rgba(0, 240, 255, 0.1) 40%, rgba(0, 0, 0, 0) 70%);
   z-index: 9999;
   border-radius: 50%;
   mix-blend-mode: screen;

@@ -15,8 +15,8 @@ export default {
                 'brown': '#4A3B32',
                 'light-brown': '#8C7B70',
 
-                // Dark Mode (Neon/Black)
-                'neon-green': '#00ff88',
+                // Dark Mode (Cyan/Black)
+                'primary-cyan': '#00F0FF', // renamed visually to Cyan
                 'dark-bg': '#0a0a0a',
                 'card-dark': '#171717',
                 'gray-text': '#a3a3a3',
@@ -24,7 +24,7 @@ export default {
             animation: {
                 scroll: 'scroll 20s linear infinite',
                 'bounce-x': 'bounce-x 1s infinite',
-                'blink-green': 'blink-green 4s infinite ease-in-out',
+                'blink-cyan': 'blink-cyan 4s infinite ease-in-out',
                 'blink': 'blink 4s infinite ease-in-out',
             },
             keyframes: {
@@ -42,9 +42,9 @@ export default {
                         animationTimingFunction: 'cubic-bezier(0, 0, 0.2, 1)'
                     },
                 },
-                'blink-green': {
-                    '0%, 100%': { opacity: '0.2', color: '#00cc6a' },
-                    '50%': { opacity: '1', color: '#00cc6a' }
+                'blink-cyan': {
+                    '0%, 100%': { opacity: '0.2', color: '#00C2FF' },
+                    '50%': { opacity: '1', color: '#00C2FF' }
                 },
                 'blink': {
                     '0%, 100%': { opacity: '0.2' },

@@ -18,7 +18,7 @@ const AboutMe = () => {
                 >
                     <div className="relative w-full max-w-md">
                         {/* Decorative background glow */}
-                        <div className="absolute inset-0 bg-gradient-to-tr from-brown/20 to-transparent dark:from-neon-green/10 dark:to-transparent rounded-full blur-3xl -z-10"></div>
+                        <div className="absolute inset-0 bg-gradient-to-tr from-brown/20 to-transparent dark:from-primary-cyan/10 dark:to-transparent rounded-full blur-3xl -z-10"></div>
 
                         {/* 
                             NOTE: lottie-react requires the JSON object. 
@@ -37,16 +37,16 @@ const AboutMe = () => {
                     className="text-left"
                 >
                     <h2 className="text-4xl md:text-5xl font-bold text-charcoal dark:text-white mb-6 relative inline-block">
-                        About <span className="text-brown dark:text-neon-green">Me</span>
-                        <span className="absolute -bottom-2 left-0 w-1/2 h-1 bg-brown dark:bg-neon-green rounded-full"></span>
+                        About <span className="text-brown dark:text-primary-cyan">Me</span>
+                        <span className="absolute -bottom-2 left-0 w-1/2 h-1 bg-brown dark:bg-primary-cyan rounded-full"></span>
                     </h2>
 
                     <div className="space-y-4 text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
                         <p>
-                            I’m <span className="font-semibold text-brown dark:text-neon-green">Balaji Sri Ram Parasa</span>, a 3rd-year Computer Science Engineering student and aspiring Full-Stack Developer from Lovely Professional University. I build strong programming fundamentals through hands-on projects and certifications, and I’m passionate about creating efficient, user-friendly software.
+                            I’m <span className="font-semibold text-brown dark:text-primary-cyan">Pothula Ajay</span>, a 3rd-year Computer Science Engineering student and aspiring Machine Learning Engineer at Lovely Professional University, maintaining a CGPA of 8.77. I am deeply interested in coding and building solutions for real-world problems.
                         </p>
                         <p>
-                            I’m a quick learner with strong problem-solving skills, clear communication, and a collaborative mindset, always eager to learn new technologies and contribute to impactful projects.
+                            I build strong programming fundamentals through hands-on projects and certifications. I excel in collaborative environments and pride myself on my problem-solving abilities, teamwork, critical thinking, and adaptability.
                         </p>
                     </div>
 
@@ -55,7 +55,7 @@ const AboutMe = () => {
                             href="#contact"
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
-                            className="inline-flex items-center gap-2 px-8 py-3 bg-brown dark:bg-neon-green text-white dark:text-black font-semibold rounded-lg shadow-md hover:bg-opacity-90 transition-all cursor-pointer"
+                            className="inline-flex items-center gap-2 px-8 py-3 bg-brown dark:bg-primary-cyan text-white dark:text-black font-semibold rounded-lg shadow-md hover:bg-opacity-90 transition-all cursor-pointer"
                         >
                             <Mail size={20} />
                             Contact Me
@@ -79,7 +79,7 @@ const CodingAnimation = () => {
             .catch(err => console.error("Lottie Load Error:", err));
     }, []);
 
-    if (!animationData) return <div className="h-64 flex items-center justify-center text-brown dark:text-neon-green">Loading Animation...</div>;
+    if (!animationData) return <div className="h-64 flex items-center justify-center text-brown dark:text-primary-cyan">Loading Animation...</div>;
 
     return <Lottie animationData={animationData} loop={true} />;
 };

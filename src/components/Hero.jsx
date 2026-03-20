@@ -45,9 +45,11 @@ const Hero = ({ theme }) => {
 
     // Typing Effect Text
     const typedText = useTypewriter([
-        "Full Stack Developer",
-        "CS Engineering Student",
-        "Creative Problem Solver",
+        "Machine Learning Engineer",
+        "Software Developer",
+        "AI Developer",
+        "Data Science Enthusiast",
+        "Problem Solver",
         "Tech Enthusiast"
     ]);
 
@@ -88,9 +90,9 @@ const Hero = ({ theme }) => {
 
                 // Determine Color based on Theme
                 // Light Mode: Darker Sand (approx #B48C5A) -> rgba(180, 140, 90, ...)
-                // Dark Mode: Neon Green (#22c55e) -> rgba(34, 197, 94, ...)
+                // Dark Mode: Cyan -> rgba(0, 240, 255, ...)
                 const isLight = theme === 'light';
-                const baseColor = isLight ? '180, 140, 90' : '34, 197, 94';
+                const baseColor = isLight ? '180, 140, 90' : '0, 240, 255';
 
                 setGlowStyle({
                     opacity: strength, // Opacity fades as you move away
@@ -112,63 +114,63 @@ const Hero = ({ theme }) => {
     return (
         <section id="home" className="min-h-screen flex items-center pt-20 md:pt-20 overflow-hidden relative">
             {/* FORCE Grid 12 Columns for granular control */}
-            <div className="container grid grid-cols-12 gap-2 md:gap-12 items-center">
+            <div className="container grid grid-cols-12 gap-2 md:gap-4 items-center">
 
                 {/* TEXT SECTION: 7 Columns on Mobile, 6 on Desktop */}
                 <motion.div
                     initial={{ opacity: 0, x: -50 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.8 }}
-                    className="relative z-10 pl-1 md:pl-16 col-span-7 md:col-span-6"
+                    className="relative z-10 pl-1 md:pl-8 col-span-7 md:col-span-6"
                 >
                     <motion.span
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: 0.2 }}
-                        className="text-brown dark:text-neon-green font-medium tracking-wide text-[10px] md:text-base"
+                        className="text-brown dark:text-primary-cyan font-medium tracking-wide text-[10px] md:text-base"
                     >
                         HELLO, I'M
                     </motion.span>
                     <h1 className="text-xl sm:text-3xl md:text-7xl font-extrabold text-charcoal dark:text-white mt-1 md:mt-4 mb-1 md:mb-2 leading-tight">
-                        Parasa Balaji <br />
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-brown to-light-brown dark:from-neon-green dark:to-emerald-600 block md:inline">
-                            Sri Ram
+                        Pothula <br />
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-brown to-light-brown dark:from-primary-cyan dark:to-cyan-600 block md:inline">
+                            Ajay
                         </span>
                     </h1>
 
                     {/* Animated Typing Text - Smaller on Mobile to prevent wrapping */}
                     <div className="text-xs sm:text-lg md:text-3xl font-bold text-gray-600 dark:text-gray-300 mb-3 md:mb-6 h-6 md:h-10 flex flex-wrap items-center">
-                        <span className="text-brown dark:text-neon-green font-mono">
+                        <span className="text-brown dark:text-primary-cyan font-mono">
                             {typedText}
                         </span>
                     </div>
 
                     <p className="hidden md:block text-lg text-gray-600 dark:text-gray-400 mb-8 max-w-lg leading-relaxed">
-                        A passionate Computer Science Engineering student and developer. I build accessible, pixel-perfect, and performant web experiences.
+                        A passionate Computer Science Engineering student focused on building intelligent systems and solving complex problems with machine learning and software development.
                     </p>
 
-                    <div className="flex flex-col md:flex-row gap-2 md:gap-4 mt-1 md:mt-8">
-                        <motion.a
-                            href="#contact"
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            className="bg-charcoal dark:bg-neon-green text-white dark:text-black px-3 py-1.5 md:px-8 md:py-3 rounded-full flex items-center justify-center gap-2 font-medium text-[10px] md:text-base hover:bg-brown dark:hover:bg-emerald-400 transition-colors shadow-lg w-fit"
-                        >
-                            <Mail size={12} className="md:w-[18px] md:h-[18px]" />
-                            <span className="hidden md:inline">Contact Me</span>
-                            <span className="md:hidden">Contact</span>
-                        </motion.a>
-                        <motion.a
-                            href="/Portfolio/resume.pdf"
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            download
-                            className="border-2 border-charcoal dark:border-neon-green text-charcoal dark:text-neon-green px-3 py-1.5 md:px-8 md:py-3 rounded-full flex items-center justify-center gap-2 font-medium text-[10px] md:text-base hover:bg-charcoal hover:text-white dark:hover:bg-neon-green/10 transition-all w-fit"
-                        >
-                            <Download size={12} className="md:w-[18px] md:h-[18px]" />
-                            Resume
-                        </motion.a>
-                    </div>
+                        <div className="flex flex-col md:flex-row gap-2 md:gap-4 mt-1 md:mt-8 items-center md:items-start w-fit">
+                            <motion.a
+                                href="#contact"
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                                className="bg-charcoal dark:bg-primary-cyan text-white dark:text-black px-3 py-1.5 md:px-8 md:py-3 rounded-full flex items-center justify-center gap-2 font-medium text-[10px] md:text-base hover:bg-brown dark:hover:bg-cyan-400 transition-colors shadow-lg w-fit"
+                            >
+                                <Mail size={12} className="md:w-[18px] md:h-[18px]" />
+                                <span className="hidden md:inline">Contact Me</span>
+                                <span className="md:hidden">Contact</span>
+                            </motion.a>
+                            <motion.a
+                                href="/resume.pdf"
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                                download
+                                className="border-2 border-charcoal dark:border-primary-cyan text-charcoal dark:text-primary-cyan px-3 py-1.5 md:px-8 md:py-3 rounded-full flex items-center justify-center gap-2 font-medium text-[10px] md:text-base hover:bg-charcoal hover:text-white dark:hover:bg-primary-cyan/10 transition-all w-fit"
+                            >
+                                <Download size={12} className="md:w-[18px] md:h-[18px]" />
+                                Resume
+                            </motion.a>
+                        </div>
                 </motion.div>
 
                 {/* IMAGE SECTION: 5 Columns on Mobile, 6 on Desktop */}
@@ -188,7 +190,7 @@ const Hero = ({ theme }) => {
                             ease: "easeInOut"
                         }
                     }}
-                    className="flex justify-center relative p-1 md:p-[150px] col-span-5 md:col-span-6"
+                    className="flex justify-center relative p-1 md:p-8 col-span-5 md:col-span-6"
                 >
                     <div
                         ref={imageContainerRef}
@@ -206,15 +208,15 @@ const Hero = ({ theme }) => {
                         />
 
                         {/* Static Subtle Glow Background (Base) */}
-                        <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-brown/10 to-transparent dark:from-neon-green/20 dark:to-transparent blur-lg md:blur-3xl -z-10 animate-pulse"></div>
+                        <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-brown/10 to-transparent dark:from-primary-cyan/20 dark:to-transparent blur-lg md:blur-3xl -z-10 animate-pulse"></div>
 
                         <img
                             src={Img}
-                            alt="Parasa Balaji Sri Ram"
-                            className="w-full h-full object-cover rounded-full border-2 md:border-4 border-white/50 dark:border-neon-green/30 shadow-lg md:shadow-2xl relative z-10"
+                            alt="Pothula Ajay"
+                            className="w-full h-full object-cover rounded-full border-2 md:border-4 border-white/50 dark:border-primary-cyan/30 shadow-lg md:shadow-2xl relative z-10"
                             style={{
                                 boxShadow: theme === 'dark'
-                                    ? '0 0 40px rgba(34, 197, 94, 0.2)'
+                                    ? '0 0 40px rgba(0, 240, 255, 0.2)'
                                     : '0 0 30px rgba(180, 140, 90, 0.2)'
                             }}
                         />
@@ -229,7 +231,7 @@ const Hero = ({ theme }) => {
                 className="absolute bottom-10 left-1/2 transform -translate-x-1/2 cursor-pointer"
                 onClick={() => document.getElementById('about').scrollIntoView({ behavior: 'smooth' })}
             >
-                <ArrowDown className="animate-bounce text-brown dark:text-neon-green" />
+                <ArrowDown className="animate-bounce text-brown dark:text-primary-cyan" />
             </motion.div>
         </section>
     );

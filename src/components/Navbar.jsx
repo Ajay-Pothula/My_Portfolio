@@ -51,7 +51,7 @@ const Navbar = ({ theme, toggleTheme }) => {
         <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${scrolled ? 'bg-cream/90 dark:bg-dark-bg/90 backdrop-blur-md shadow-sm py-4' : 'bg-transparent py-6'}`}>
             <div className="container flex justify-between items-center">
                 <a href="#home" className="text-2xl font-bold tracking-tighter text-brown dark:text-white transition-colors">
-                    PBSR<span className="text-beige dark:text-neon-green">.</span>
+                    PA<span className="text-beige dark:text-primary-cyan">.</span>
                 </a>
 
                 {/* Desktop Menu */}
@@ -64,13 +64,13 @@ const Navbar = ({ theme, toggleTheme }) => {
                                 href={link.href}
                                 className={`text-sm font-medium relative group transition-all duration-700 ease-out bg-gradient-to-r bg-[length:200%_100%] bg-clip-text 
                                     ${isActive
-                                        ? 'from-brown to-brown dark:from-neon-green dark:to-neon-green bg-[0%_0%] text-transparent'
-                                        : 'from-brown to-charcoal dark:from-neon-green dark:to-gray-300 bg-[100%_0%] hover:text-brown dark:text-gray-300 dark:hover:text-neon-green'
+                                        ? 'from-brown to-brown dark:from-primary-cyan dark:to-primary-cyan bg-[0%_0%] text-transparent'
+                                        : 'from-brown to-charcoal dark:from-primary-cyan dark:to-gray-300 bg-[100%_0%] hover:text-brown dark:text-gray-300 dark:hover:text-primary-cyan'
                                     }`}
                                 style={isActive ? { webkitTextFillColor: 'transparent' } : {}}
                             >
                                 {link.name}
-                                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-brown dark:bg-neon-green transition-all group-hover:w-full"></span>
+                                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-brown dark:bg-primary-cyan transition-all group-hover:w-full"></span>
                             </a>
                         );
                     })}
@@ -104,7 +104,7 @@ const Navbar = ({ theme, toggleTheme }) => {
                                 key={link.name}
                                 href={link.href}
                                 onClick={() => setIsOpen(false)}
-                                className="text-lg font-medium hover:text-brown dark:text-gray-300 dark:hover:text-neon-green"
+                                className="text-lg font-medium hover:text-brown dark:text-gray-300 dark:hover:text-primary-cyan"
                             >
                                 {link.name}
                             </a>

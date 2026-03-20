@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { motion, useSpring, useMotionValue } from 'framer-motion';
 
 const CursorFollower = ({ theme }) => {
-    const cursorX = useMotionValue(-100);
-    const cursorY = useMotionValue(-100);
+    const cursorX = useMotionValue(-10);
+    const cursorY = useMotionValue(-10);
 
-    const springConfig = { damping: 25, stiffness: 100 };
+    const springConfig = { damping: 25, stiffness: 200 };
     const cursorXSpring = useSpring(cursorX, springConfig);
     const cursorYSpring = useSpring(cursorY, springConfig);
 
@@ -24,8 +24,8 @@ const CursorFollower = ({ theme }) => {
 
     const isLight = theme === 'light';
     const gradient = isLight
-        ? "radial-gradient(circle, rgba(180, 140, 90, 0.6) 0%, rgba(180, 140, 90, 0.3) 40%, rgba(0, 0, 0, 0) 70%)"
-        : "radial-gradient(circle, rgba(0, 255, 136, 0.25) 0%, rgba(0, 255, 136, 0.1) 40%, rgba(0, 0, 0, 0) 70%)";
+        ? "radial-gradient(circle, rgba(180, 140, 90, 0.6) 0%, rgba(180, 140, 90, 0.3) 35%, rgba(0, 0, 0, 0) 60%)"
+        : "radial-gradient(circle, rgba(0, 240, 255, 0.25) 0%, rgba(0, 240, 255, 0.1) 30%, rgba(0, 0, 0, 0) 60%)";
 
     // Light mode needs 'normal' or 'multiply' to show the dark color against light bg. 'screen' washes it out.
     const blendMode = isLight ? 'normal' : 'screen';

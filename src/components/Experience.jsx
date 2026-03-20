@@ -1,54 +1,170 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { GraduationCap, School, Award, BookOpen, Briefcase } from 'lucide-react';
+import SpotlightCard from './SpotlightCard';
 
-const Experience = () => {
+const Experience = ({ theme }) => {
+    const education = [
+        {
+            period: "Aug 2023 - Present",
+            title: "B.Tech in Computer Science & Engineering",
+            institution: "Lovely Professional University, Punjab",
+            score: "CGPA: 8.75",
+            icon: <GraduationCap className="w-6 h-6" />
+        },
+        {
+            period: "Aug 2021 - May 2023",
+            title: "Intermediate (MPC)",
+            institution: "Sri Chaitanya Junior College, Palakol",
+            score: "Percentage: 96.5%",
+            icon: <School className="w-6 h-6" />
+        },
+        {
+            period: "Aug 2020 - Jun 2021",
+            title: "SSC (10th Standard)",
+            institution: "Aditya School, Narsapur",
+            score: "Percentage: 98%",
+            icon: <BookOpen className="w-6 h-6" />
+        }
+    ];
+
+    const certifications = [
+        {
+            date: "Sep 2025",
+            title: "Oracle Cloud Infrastructure 2025 AI Foundations Associate",
+            provider: "Oracle University"
+        },
+        {
+            date: "Apr 2025",
+            title: "Cloud Computing",
+            provider: "NPTEL"
+        },
+        {
+            date: "Aug 2024",
+            title: "Crash Course on Python",
+            provider: "Google (via Coursera)"
+        }
+    ];
+
     return (
-        <section id="experience" className="py-20 bg-[#f5f2eb] dark:bg-[#0f0f0f] transition-colors duration-300">
-            <div className="container">
-                <h2 className="text-4xl font-bold mb-16 text-center text-charcoal dark:text-white">Experience & Education</h2>
+        <section id="experience" className="py-24 bg-[#f5f2eb] dark:bg-[#0f0f0f] transition-colors duration-300">
+            <div className="container px-6">
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    className="text-center mb-20"
+                >
+                    <h2 className="text-4xl md:text-5xl font-bold text-charcoal dark:text-white mb-4">Journey & Learning</h2>
+                    <p className="text-brown/70 dark:text-gray-400 max-w-2xl mx-auto">A roadmap of my academic foundations and professional certifications.</p>
+                </motion.div>
 
-                <div className="max-w-3xl mx-auto space-y-12">
-                    {/* Training */}
-                    <motion.div
-                        initial={{ opacity: 0, x: -20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        className="border-l-4 border-brown dark:border-neon-green pl-6 py-2"
-                    >
-                        <span className="text-sm font-bold text-light-brown dark:text-neon-green uppercase tracking-wider">June 2025</span>
-                        <h3 className="text-2xl font-bold text-charcoal dark:text-white mt-2">Front-End Web Development Intern</h3>
-                        <p className="text-lg font-medium text-brown dark:text-gray-300">Gokboru Tech Pvt. Ltd.</p>
-                        <ul className="mt-4 space-y-2 text-gray-700 dark:text-gray-400 list-disc list-inside">
-                            <li>Completed intensive 6-week training covering React.js, HTML, CSS, JavaScript.</li>
-                            <li>Created a Task Manager web app to improve task organization.</li>
-                            <li>Designed responsive interfaces for mobile and desktop.</li>
-                        </ul>
-                    </motion.div>
+                <div className="max-w-5xl mx-auto">
+                    {/* Experience/Training Section */}
+                    <div className="mb-20">
+                        <div className="flex items-center gap-4 mb-10">
+                            <div className="p-3 bg-brown/10 dark:bg-primary-cyan/10 rounded-xl text-brown dark:text-primary-cyan">
+                                <Briefcase className="w-6 h-6" />
+                            </div>
+                            <h3 className="text-2xl font-bold text-charcoal dark:text-white">Training & Experience</h3>
+                        </div>
+                        
+                        <motion.div
+                            initial={{ opacity: 0, x: -20 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                        >
+                            <SpotlightCard
+                                spotlightColor={theme === 'light' ? "rgba(180, 140, 90, 0.2)" : "rgba(0, 255, 136, 0.1)"}
+                                className="p-8 rounded-2xl bg-white/50 dark:bg-white/5 border border-brown/10 dark:border-white/10"
+                            >
+                                <span className="text-sm font-bold text-brown dark:text-primary-cyan uppercase tracking-widest">Jun 2025 - Jul 2025</span>
+                                <h4 className="text-2xl font-bold text-charcoal dark:text-white mt-2">Guide to Machine Learning with Data Science</h4>
+                                <p className="text-lg font-medium text-brown/80 dark:text-gray-300">Cipher Schools (Edtech Company)</p>
+                                <ul className="mt-6 grid md:grid-cols-2 gap-4 text-gray-700 dark:text-gray-400">
+                                    <li className="flex gap-3">
+                                        <span className="w-1.5 h-1.5 rounded-full bg-brown/50 dark:bg-primary-cyan/50 mt-2 flex-shrink-0" />
+                                        Performed EDA using NumPy and Pandas, optimized preprocessing.
+                                    </li>
+                                    <li className="flex gap-3">
+                                        <span className="w-1.5 h-1.5 rounded-full bg-brown/50 dark:bg-primary-cyan/50 mt-2 flex-shrink-0" />
+                                        Hands-on training in ML fundamentals and feature engineering.
+                                    </li>
+                                    <li className="flex gap-3">
+                                        <span className="w-1.5 h-1.5 rounded-full bg-brown/50 dark:bg-primary-cyan/50 mt-2 flex-shrink-0" />
+                                        Built models using LR, KNN, SVM, Decision Trees, and K-Means.
+                                    </li>
+                                </ul>
+                            </SpotlightCard>
+                        </motion.div>
+                    </div>
 
-                    {/* Education */}
-                    <motion.div
-                        initial={{ opacity: 0, x: -20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.2 }}
-                        className="border-l-4 border-beige dark:border-white/20 pl-6 py-2"
-                    >
-                        <span className="text-sm font-bold text-light-brown dark:text-neon-green uppercase tracking-wider">2023 - Present</span>
-                        <h3 className="text-2xl font-bold text-charcoal dark:text-white mt-2">B.Tech in Computer Science & Engineering</h3>
-                        <p className="text-lg font-medium text-brown dark:text-gray-300">Lovely Professional University, Punjab</p>
-                        <p className="mt-2 text-gray-700 dark:text-gray-400">CGPA: 8.13</p>
-                    </motion.div>
+                    <div className="grid lg:grid-cols-2 gap-16">
+                        {/* Education Section */}
+                        <div>
+                            <div className="flex items-center gap-4 mb-10">
+                                <div className="p-3 bg-brown/10 dark:bg-primary-cyan/10 rounded-xl text-brown dark:text-primary-cyan">
+                                    <GraduationCap className="w-6 h-6" />
+                                </div>
+                                <h3 className="text-2xl font-bold text-charcoal dark:text-white">Education</h3>
+                            </div>
 
-                    {/* Education 2 */}
-                    <motion.div
-                        initial={{ opacity: 0, x: -20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.3 }}
-                        className="border-l-4 border-beige/50 dark:border-white/10 pl-6 py-2"
-                    >
-                        <span className="text-sm font-bold text-light-brown dark:text-neon-green uppercase tracking-wider">2021 - 2023</span>
-                        <h3 className="text-xl font-bold text-charcoal dark:text-white mt-2">Intermediate</h3>
-                        <p className="text-lg font-medium text-brown dark:text-gray-300">Aditya Junior College</p>
-                        <p className="mt-2 text-gray-700 dark:text-gray-400">Percentage: 92%</p>
-                    </motion.div>
+                            <div className="space-y-6">
+                                {education.map((item, idx) => (
+                                    <motion.div
+                                        key={idx}
+                                        initial={{ opacity: 0, y: 20 }}
+                                        whileInView={{ opacity: 1, y: 0 }}
+                                        transition={{ delay: idx * 0.1 }}
+                                    >
+                                        <SpotlightCard
+                                            spotlightColor={theme === 'light' ? "rgba(180, 140, 90, 0.1)" : "rgba(0, 255, 136, 0.05)"}
+                                            className="p-6 rounded-2xl bg-white/30 dark:bg-white/5 border border-brown/5 dark:border-white/5 hover:border-brown/20 dark:hover:border-primary-cyan/20 transition-all"
+                                        >
+                                            <div className="flex gap-4">
+                                                <div className="text-brown/60 dark:text-primary-cyan/60 mt-1">{item.icon}</div>
+                                                <div>
+                                                    <span className="text-xs font-bold text-brown/50 dark:text-primary-cyan/50 uppercase tracking-widest">{item.period}</span>
+                                                    <h4 className="text-xl font-bold text-charcoal dark:text-white mt-1">{item.title}</h4>
+                                                    <p className="text-gray-600 dark:text-gray-400 mt-1">{item.institution}</p>
+                                                    <p className="inline-block mt-3 px-3 py-1 bg-brown/10 dark:bg-primary-cyan/10 text-brown dark:text-primary-cyan rounded-full text-xs font-bold">
+                                                        {item.score}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </SpotlightCard>
+                                    </motion.div>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Certifications Section */}
+                        <div>
+                            <div className="flex items-center gap-4 mb-10">
+                                <div className="p-3 bg-brown/10 dark:bg-primary-cyan/10 rounded-xl text-brown dark:text-primary-cyan">
+                                    <Award className="w-6 h-6" />
+                                </div>
+                                <h3 className="text-2xl font-bold text-charcoal dark:text-white">Certifications</h3>
+                            </div>
+
+                            <div className="space-y-4">
+                                {certifications.map((cert, idx) => (
+                                    <motion.div
+                                        key={idx}
+                                        initial={{ opacity: 0, y: 20 }}
+                                        whileInView={{ opacity: 1, y: 0 }}
+                                        transition={{ delay: idx * 0.1 }}
+                                        className="relative group lg:pl-4"
+                                    >
+                                        <div className="absolute left-0 top-0 bottom-0 w-1 bg-brown/20 dark:bg-white/10 group-hover:bg-brown dark:group-hover:bg-primary-cyan transition-colors rounded-full" />
+                                        <div className="py-2 pl-4">
+                                            <span className="text-[10px] font-bold text-brown/50 dark:text-primary-cyan/50 uppercase tracking-[0.2em]">{cert.date}</span>
+                                            <h4 className="text-lg font-bold text-charcoal dark:text-white leading-tight mt-1 group-hover:text-brown dark:group-hover:text-primary-cyan transition-colors">{cert.title}</h4>
+                                            <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">{cert.provider}</p>
+                                        </div>
+                                    </motion.div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
