@@ -120,9 +120,9 @@ const Experience = ({ theme }) => {
                         </motion.div>
                     </div>
 
-                    <div className="grid lg:grid-cols-2 gap-16">
+                    <div className="space-y-24">
                         {/* Education Section */}
-                        <div>
+                        <div className="w-full">
                             <div className="flex items-center gap-4 mb-10">
                                 <div className="p-3 bg-brown/10 dark:bg-primary-cyan/10 rounded-xl text-brown dark:text-primary-cyan">
                                     <GraduationCap className="w-6 h-6" />
@@ -134,23 +134,29 @@ const Experience = ({ theme }) => {
                                 {education.map((item, idx) => (
                                     <motion.div
                                         key={idx}
-                                        initial={{ opacity: 0, y: 20 }}
-                                        whileInView={{ opacity: 1, y: 0 }}
+                                        initial={{ opacity: 0, x: -20 }}
+                                        whileInView={{ opacity: 1, x: 0 }}
                                         transition={{ delay: idx * 0.1 }}
                                     >
                                         <SpotlightCard
                                             spotlightColor={theme === 'light' ? "rgba(180, 140, 90, 0.1)" : "rgba(0, 255, 136, 0.05)"}
-                                            className="p-6 rounded-2xl bg-white/30 dark:bg-white/5 border border-brown/5 dark:border-white/5 hover:border-brown/20 dark:hover:border-primary-cyan/20 transition-all"
+                                            className="p-8 rounded-2xl bg-white/30 dark:bg-white/5 border border-brown/5 dark:border-white/5 hover:border-brown/20 dark:hover:border-primary-cyan/20 transition-all"
                                         >
-                                            <div className="flex gap-4">
-                                                <div className="text-brown/60 dark:text-primary-cyan/60 mt-1">{item.icon}</div>
-                                                <div>
-                                                    <span className="text-xs font-bold text-brown/50 dark:text-primary-cyan/50 uppercase tracking-widest">{item.period}</span>
-                                                    <h4 className="text-xl font-bold text-charcoal dark:text-white mt-1">{item.title}</h4>
-                                                    <p className="text-gray-600 dark:text-gray-400 mt-1">{item.institution}</p>
-                                                    <p className="inline-block mt-3 px-3 py-1 bg-brown/10 dark:bg-primary-cyan/10 text-brown dark:text-primary-cyan rounded-full text-xs font-bold">
+                                            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+                                                <div className="flex gap-6 items-center">
+                                                    <div className="p-4 bg-brown/5 dark:bg-primary-cyan/5 rounded-2xl text-brown/60 dark:text-primary-cyan/60 hidden sm:block">
+                                                        {item.icon}
+                                                    </div>
+                                                    <div>
+                                                        <span className="text-[10px] font-bold text-brown/50 dark:text-primary-cyan/50 uppercase tracking-[0.2em]">{item.period}</span>
+                                                        <h4 className="text-2xl font-bold text-charcoal dark:text-white mt-1">{item.title}</h4>
+                                                        <p className="text-gray-600 dark:text-gray-400 font-medium">{item.institution}</p>
+                                                    </div>
+                                                </div>
+                                                <div className="flex-shrink-0">
+                                                    <span className="px-5 py-2 bg-brown/10 dark:bg-primary-cyan/10 text-brown dark:text-primary-cyan rounded-full text-xs font-bold ring-1 ring-inset ring-brown/20 dark:ring-primary-cyan/20">
                                                         {item.score}
-                                                    </p>
+                                                    </span>
                                                 </div>
                                             </div>
                                         </SpotlightCard>
@@ -160,7 +166,7 @@ const Experience = ({ theme }) => {
                         </div>
 
                         {/* Certifications Section */}
-                        <div>
+                        <div className="w-full">
                             <div className="flex items-center gap-4 mb-10">
                                 <div className="p-3 bg-brown/10 dark:bg-primary-cyan/10 rounded-xl text-brown dark:text-primary-cyan">
                                     <Award className="w-6 h-6" />
@@ -168,34 +174,50 @@ const Experience = ({ theme }) => {
                                 <h3 className="text-2xl font-bold text-charcoal dark:text-white">Certifications</h3>
                             </div>
 
-                            <div className="space-y-4">
+                            <div className="grid sm:grid-cols-2 gap-8">
                                 {certifications.map((cert, idx) => (
-                                    <motion.div
+                                    <motion.a
                                         key={idx}
-                                        initial={{ opacity: 0, y: 20 }}
+                                        href={cert.link}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        initial={{ opacity: 0, y: 30 }}
                                         whileInView={{ opacity: 1, y: 0 }}
-                                        transition={{ delay: idx * 0.1 }}
-                                        className="relative group lg:pl-4"
+                                        whileHover={{ y: -5 }}
+                                        className="group relative h-72 rounded-[2rem] bg-white/50 dark:bg-white/5 border border-brown/10 dark:border-white/10 hover:border-brown dark:hover:border-primary-cyan transition-all p-10 flex flex-col justify-between"
                                     >
-                                        <div className="absolute left-0 top-0 bottom-0 w-1 bg-brown/20 dark:bg-white/10 group-hover:bg-brown dark:group-hover:bg-primary-cyan transition-colors rounded-full" />
-                                        <div className="py-2 pl-4">
-                                            <span className="text-[10px] font-bold text-brown/50 dark:text-primary-cyan/50 uppercase tracking-[0.2em]">{cert.date}</span>
-                                            <h4 className="text-lg font-bold text-charcoal dark:text-white leading-tight mt-1 group-hover:text-brown dark:group-hover:text-primary-cyan transition-colors">{cert.title}</h4>
-                                            <div className="flex items-center gap-4 mt-1">
-                                                <p className="text-sm text-gray-500 dark:text-gray-400">{cert.provider}</p>
-                                                {cert.link && (
-                                                    <a 
-                                                        href={cert.link} 
-                                                        target="_blank" 
-                                                        rel="noopener noreferrer"
-                                                        className="text-xs font-bold text-brown dark:text-primary-cyan hover:underline ml-4"
-                                                    >
-                                                        View Certificate
-                                                    </a>
-                                                )}
+                                        {/* Floating Certificate Preview Overlay */}
+                                        <div className="absolute inset-0 z-0 overflow-hidden rounded-[2rem] pointer-events-none">
+                                            <motion.div 
+                                                className="absolute -right-6 top-1/2 -translate-y-1/2 w-72 h-48 opacity-0 group-hover:opacity-100 group-hover:-rotate-3 translate-x-12 group-hover:translate-x-0 transition-all duration-700 shadow-2xl border-8 border-white dark:border-white/10 rounded-xl hidden lg:block"
+                                                style={{
+                                                    backgroundImage: `url(${cert.image || 'https://images.unsplash.com/photo-1513258496099-48168024adb0?q=80&w=2070&auto=format&fit=crop'})`,
+                                                    backgroundSize: 'cover',
+                                                    backgroundPosition: 'top'
+                                                }}
+                                            />
+                                        </div>
+                                        
+                                        <div className="relative z-10 max-w-[65%]">
+                                            <div className="flex items-center gap-2 mb-4">
+                                                <div className="w-2 h-2 rounded-full bg-brown dark:bg-primary-cyan animate-pulse" />
+                                                <span className="text-xs font-bold text-brown/50 dark:text-primary-cyan/50 uppercase tracking-[0.2em]">{cert.date}</span>
+                                            </div>
+                                            <h4 className="text-2xl font-bold text-charcoal dark:text-white leading-tight group-hover:text-brown dark:group-hover:text-primary-cyan transition-colors break-words drop-shadow-sm">
+                                                {cert.title}
+                                            </h4>
+                                            <p className="text-sm font-medium text-gray-500 dark:text-gray-400 mt-3">{cert.provider}</p>
+                                        </div>
+
+                                        <div className="relative z-10 flex justify-between items-end">
+                                            <div className="p-4 rounded-2xl bg-brown/10 dark:bg-primary-cyan/10 text-brown dark:text-primary-cyan group-hover:bg-brown dark:group-hover:bg-primary-cyan group-hover:text-white dark:group-hover:text-black transition-all">
+                                                <Award className="w-6 h-6" />
+                                            </div>
+                                            <div className="flex items-center gap-2 px-6 py-3 rounded-full bg-brown dark:bg-primary-cyan text-white dark:text-black opacity-0 group-hover:opacity-100 transition-all translate-y-4 group-hover:translate-y-0 shadow-xl font-bold text-xs uppercase tracking-widest">
+                                                Verify Credential
                                             </div>
                                         </div>
-                                    </motion.div>
+                                    </motion.a>
                                 ))}
                             </div>
                         </div>
