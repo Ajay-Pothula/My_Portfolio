@@ -1,7 +1,8 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowDown, Download, Mail } from 'lucide-react';
+import { ArrowDown, Download, Mail, Github, Linkedin } from 'lucide-react';
 import Img from '../assets/my_pic.jpg';
+import leetcodeImg from '../assets/leetcode.png';
 
 const useTypewriter = (words, typingSpeed = 150, deletingSpeed = 100, pauseDuration = 2000) => {
     const [index, setIndex] = useState(0);
@@ -52,6 +53,12 @@ const Hero = ({ theme }) => {
         "Problem Solver",
         "Tech Enthusiast"
     ]);
+
+    const socialLinks = [
+        { icon: <Github size={24} className="text-[#333] dark:text-white" />, url: "https://github.com/ajay-pothula" },
+        { icon: <Linkedin size={24} className="text-[#0077b5]" />, url: "https://linkedin.com/in/ajay-pothula" },
+        { icon: <img src={leetcodeImg} alt="LeetCode" className="w-6 h-6" />, url: "https://leetcode.com/u/Pothula_Ajay/" }
+    ];
 
     // Global listener for orbital border glow
     useEffect(() => {
@@ -112,7 +119,7 @@ const Hero = ({ theme }) => {
     }, [theme]);
 
     return (
-        <section id="home" className="min-h-screen flex items-center pt-20 md:pt-20 overflow-hidden relative">
+        <section id="home" className="min-h-screen flex items-center pt-16 md:pt-16 overflow-hidden relative">
             {/* FORCE Grid 12 Columns for granular control */}
             <div className="container grid grid-cols-12 gap-2 md:gap-4 items-center">
 
@@ -131,9 +138,9 @@ const Hero = ({ theme }) => {
                     >
                         HELLO, I'M
                     </motion.span>
-                    <h1 className="text-xl sm:text-3xl md:text-7xl font-extrabold text-charcoal dark:text-white mt-1 md:mt-4 mb-1 md:mb-2 leading-tight">
-                        Pothula <br />
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-brown to-light-brown dark:from-primary-cyan dark:to-cyan-600 block md:inline">
+                    <h1 className="text-xl sm:text-3xl md:text-7xl font-extrabold text-charcoal dark:text-white mt-1 md:mt-4 mb-2 md:mb-4 leading-tight">
+                        Pothula{" "}
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-brown to-light-brown dark:from-primary-cyan dark:to-cyan-600">
                             Ajay
                         </span>
                     </h1>
@@ -145,32 +152,32 @@ const Hero = ({ theme }) => {
                         </span>
                     </div>
 
-                    <p className="hidden md:block text-lg text-gray-600 dark:text-gray-400 mb-8 max-w-lg leading-relaxed">
-                        A passionate Computer Science Engineering student focused on building intelligent systems and solving complex problems with machine learning and software development.
+                    <p className="hidden md:block text-lg text-gray-600 dark:text-gray-400 mb-8 max-w-2xl leading-relaxed">
+                        A passionate Computer Science Engineering student dedicated to crafting intelligent, data-driven solutions. Specializing in Machine Learning and Software Development, I bridge the gap between complex algorithms and real-world applications to build impactful technology.
                     </p>
 
-                        <div className="flex flex-col md:flex-row gap-2 md:gap-4 mt-1 md:mt-8 items-center md:items-start w-fit">
-                            <motion.a
-                                href="#contact"
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.95 }}
-                                className="bg-charcoal dark:bg-primary-cyan text-white dark:text-black px-3 py-1.5 md:px-8 md:py-3 rounded-full flex items-center justify-center gap-2 font-medium text-[10px] md:text-base hover:bg-brown dark:hover:bg-cyan-400 transition-colors shadow-lg w-fit"
-                            >
-                                <Mail size={12} className="md:w-[18px] md:h-[18px]" />
-                                <span className="hidden md:inline">Contact Me</span>
-                                <span className="md:hidden">Contact</span>
-                            </motion.a>
-                            <motion.a
-                                href="/resume.pdf"
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.95 }}
-                                download
-                                className="border-2 border-charcoal dark:border-primary-cyan text-charcoal dark:text-primary-cyan px-3 py-1.5 md:px-8 md:py-3 rounded-full flex items-center justify-center gap-2 font-medium text-[10px] md:text-base hover:bg-charcoal hover:text-white dark:hover:bg-primary-cyan/10 transition-all w-fit"
-                            >
-                                <Download size={12} className="md:w-[18px] md:h-[18px]" />
-                                Resume
-                            </motion.a>
-                        </div>
+                    <div className="flex flex-col md:flex-row gap-2 md:gap-4 mt-1 md:mt-8 items-center md:items-start w-fit">
+                        <motion.a
+                            href="#contact"
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            className="bg-charcoal dark:bg-primary-cyan text-white dark:text-black px-3 py-1.5 md:px-8 md:py-3 rounded-full flex items-center justify-center gap-2 font-medium text-[10px] md:text-base hover:bg-brown dark:hover:bg-cyan-400 transition-colors shadow-lg w-fit"
+                        >
+                            <Mail size={12} className="md:w-[18px] md:h-[18px]" />
+                            <span className="hidden md:inline">Contact Me</span>
+                            <span className="md:hidden">Contact</span>
+                        </motion.a>
+                        <motion.a
+                            href="/resume.pdf"
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            download
+                            className="border-2 border-charcoal dark:border-primary-cyan text-charcoal dark:text-primary-cyan px-3 py-1.5 md:px-8 md:py-3 rounded-full flex items-center justify-center gap-2 font-medium text-[10px] md:text-base hover:bg-charcoal hover:text-white dark:hover:bg-primary-cyan/10 transition-all w-fit"
+                        >
+                            <Download size={12} className="md:w-[18px] md:h-[18px]" />
+                            Resume
+                        </motion.a>
+                    </div>
                 </motion.div>
 
                 {/* IMAGE SECTION: 5 Columns on Mobile, 6 on Desktop */}
@@ -179,47 +186,101 @@ const Hero = ({ theme }) => {
                     animate={{
                         opacity: 1,
                         scale: 1,
-                        y: [-10, 10, -10]
+                        y: [-15, 5, -15] // Sitting higher and floating
                     }}
                     transition={{
                         opacity: { duration: 0.8, delay: 0.2 },
                         scale: { duration: 0.8, delay: 0.2 },
                         y: {
-                            duration: 6,
+                            duration: 5,
                             repeat: Infinity,
                             ease: "easeInOut"
                         }
                     }}
-                    className="flex justify-center relative p-1 md:p-8 col-span-5 md:col-span-6"
+                    className="flex flex-col items-center justify-center relative p-1 md:p-8 col-span-5 md:col-span-6"
                 >
-                    <div
-                        ref={imageContainerRef}
-                        className="relative w-28 h-28 sm:w-48 sm:h-48 md:w-96 md:h-96 flex items-center justify-center transition-transform duration-500 ease-out hover:scale-105"
-                    >
-                        {/* Orbital Border Glow - No Pulse, Fixed to Edge */}
+                    <div className="relative flex flex-col items-center group/hero-container">
                         <div
-                            className="absolute rounded-full pointer-events-none transition-opacity duration-150 ease-out -inset-5 md:-inset-10 blur-xl md:blur-2xl"
-                            style={{
-                                // inset & filter moved to className for responsiveness
-                                background: glowStyle.background,
-                                opacity: glowStyle.opacity,
-                                zIndex: -1
-                            }}
-                        />
+                            ref={imageContainerRef}
+                            className="relative w-28 h-28 sm:w-48 sm:h-48 md:w-96 md:h-96 flex items-center justify-center transition-transform duration-500 ease-out hover:scale-105 z-10"
+                        >
+                            {/* Orbital Border Glow - No Pulse, Fixed to Edge */}
+                            <div
+                                className="absolute rounded-full pointer-events-none transition-opacity duration-150 ease-out -inset-5 md:-inset-10 blur-xl md:blur-2xl"
+                                style={{
+                                    // inset & filter moved to className for responsiveness
+                                    background: glowStyle.background,
+                                    opacity: glowStyle.opacity,
+                                    zIndex: -1
+                                }}
+                            />
 
-                        {/* Static Subtle Glow Background (Base) */}
-                        <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-brown/10 to-transparent dark:from-primary-cyan/20 dark:to-transparent blur-lg md:blur-3xl -z-10 animate-pulse"></div>
+                            {/* Static Subtle Glow Background (Base) */}
+                            <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-brown/10 to-transparent dark:from-primary-cyan/20 dark:to-transparent blur-lg md:blur-3xl -z-10 animate-pulse"></div>
 
-                        <img
-                            src={Img}
-                            alt="Pothula Ajay"
-                            className="w-full h-full object-cover rounded-full border-2 md:border-4 border-white/50 dark:border-primary-cyan/30 shadow-lg md:shadow-2xl relative z-10"
-                            style={{
-                                boxShadow: theme === 'dark'
-                                    ? '0 0 40px rgba(0, 240, 255, 0.2)'
-                                    : '0 0 30px rgba(180, 140, 90, 0.2)'
-                            }}
-                        />
+                            <img
+                                src={Img}
+                                alt="Pothula Ajay"
+                                className="w-full h-full object-cover rounded-full border-2 md:border-4 border-white/50 dark:border-primary-cyan/30 shadow-lg md:shadow-2xl relative z-10"
+                                style={{
+                                    boxShadow: theme === 'dark'
+                                        ? '0 0 40px rgba(0, 240, 255, 0.2)'
+                                        : '0 0 30px rgba(180, 140, 90, 0.2)'
+                                }}
+                            />
+                        </div> {/* Closes imageContainerRef */}
+
+                    {/* Social Links & Role Badge - Positioned below the image, separated from image hover */}
+                    <div className="flex flex-col items-center gap-4 mt-4 md:mt-6 z-20">
+                            {/* Machine Learning Engineer Badge */}
+                            <motion.div
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{
+                                    opacity: 1,
+                                    y: 0,
+                                    scale: [1, 1.02, 1]
+                                }}
+                                transition={{
+                                    delay: 0.8,
+                                    scale: { duration: 4, repeat: Infinity, ease: "easeInOut" }
+                                }}
+                                className="bg-white/40 dark:bg-white/5 backdrop-blur-xl px-4 py-1.5 md:px-6 md:py-2 rounded-xl border border-brown/10 dark:border-white/10 shadow-xl whitespace-nowrap"
+                            >
+                                <span className="text-[10px] md:text-sm font-bold text-brown dark:text-primary-cyan uppercase tracking-wider">
+                                    Machine Learning Engineer
+                                </span>
+                            </motion.div>
+
+                            {/* Social Icons as Styled Boxes */}
+                            <div className="flex gap-4 md:gap-6 mt-2 pb-4">
+                                {socialLinks.map((link, index) => (
+                                    <motion.a
+                                        key={index}
+                                        href={link.url}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        initial={{ opacity: 0, y: 10, scale: 0.9 }}
+                                    animate={{ 
+                                        opacity: 1, 
+                                        y: 0, 
+                                        scale: 0.9,
+                                        transition: { delay: 1 + index * 0.1, duration: 0.5 }
+                                    }}
+                                    whileHover={{ 
+                                        y: -5, 
+                                        scale: 1.1,
+                                        backgroundColor: theme === 'dark' ? "rgba(255, 255, 255, 0.1)" : "rgba(180, 140, 90, 0.3)"
+                                    }}
+                                    transition={{ duration: 0.2 }} // Default for all other states (like un-hover)
+                                    className="w-10 h-10 md:w-14 md:h-14 flex items-center justify-center bg-white/30 dark:bg-white/5 backdrop-blur-md rounded-xl border border-brown/10 dark:border-white/10 hover:border-brown/40 dark:hover:border-primary-cyan/40 shadow-lg"
+                                >
+                                    <div className="transition-all duration-200">
+                                        {link.icon}
+                                    </div>
+                                </motion.a>
+                                ))}
+                            </div>
+                        </div>
                     </div>
                 </motion.div>
             </div>

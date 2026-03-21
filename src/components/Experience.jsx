@@ -30,19 +30,28 @@ const Experience = ({ theme }) => {
 
     const certifications = [
         {
+            date: "Mar 2026",
+            title: "The Science of Well Being",
+            provider: "Coursera",
+            link: "https://drive.google.com/file/d/1bK_1HnVtBUPW8pe6C_ReBCAC0oVuVKk7/view?usp=sharing"
+        },
+        {
             date: "Sep 2025",
             title: "Oracle Cloud Infrastructure 2025 AI Foundations Associate",
-            provider: "Oracle University"
+            provider: "Oracle University",
+            link: "https://drive.google.com/file/d/1uR61bTJ5D-RhBZhQTK7Ub8iaVJfdxpYY/view?usp=sharing"
         },
         {
             date: "Apr 2025",
             title: "Cloud Computing",
-            provider: "NPTEL"
+            provider: "NPTEL",
+            link: "https://drive.google.com/file/d/1mVgE-syUCibmPrZzCPCPiuvjzSa_EgyC/view?usp=sharing"
         },
         {
             date: "Aug 2024",
             title: "Crash Course on Python",
-            provider: "Google (via Coursera)"
+            provider: "Google (via Coursera)",
+            link: "https://drive.google.com/file/d/163I2WWmYJOouoWYdhksjEzYAsSfMPLBB/view?usp=sharing"
         }
     ];
 
@@ -78,7 +87,17 @@ const Experience = ({ theme }) => {
                             >
                                 <span className="text-sm font-bold text-brown dark:text-primary-cyan uppercase tracking-widest">Jun 2025 - Jul 2025</span>
                                 <h4 className="text-2xl font-bold text-charcoal dark:text-white mt-2">Guide to Machine Learning with Data Science</h4>
-                                <p className="text-lg font-medium text-brown/80 dark:text-gray-300">Cipher Schools (Edtech Company)</p>
+                                <div className="flex items-center gap-4">
+                                    <p className="text-lg font-medium text-brown/80 dark:text-gray-300">Cipher Schools (Edtech Company)</p>
+                                    <a 
+                                        href="https://www.cipherschools.com/certificate/preview?id=687e69327efd6d50907040aa" 
+                                        target="_blank" 
+                                        rel="noopener noreferrer"
+                                        className="text-xs font-bold text-brown dark:text-primary-cyan hover:underline ml-4"
+                                    >
+                                        View Certificate
+                                    </a>
+                                </div>
                                 <ul className="mt-6 grid md:grid-cols-2 gap-4 text-gray-700 dark:text-gray-400">
                                     <li className="flex gap-3">
                                         <span className="w-1.5 h-1.5 rounded-full bg-brown/50 dark:bg-primary-cyan/50 mt-2 flex-shrink-0" />
@@ -91,6 +110,10 @@ const Experience = ({ theme }) => {
                                     <li className="flex gap-3">
                                         <span className="w-1.5 h-1.5 rounded-full bg-brown/50 dark:bg-primary-cyan/50 mt-2 flex-shrink-0" />
                                         Built models using LR, KNN, SVM, Decision Trees, and K-Means.
+                                    </li>
+                                    <li className="flex gap-3">
+                                        <span className="w-1.5 h-1.5 rounded-full bg-brown/50 dark:bg-primary-cyan/50 mt-2 flex-shrink-0" />
+                                        Implemented real-world projects applying supervised and unsupervised learning techniques to derive actionable insights.
                                     </li>
                                 </ul>
                             </SpotlightCard>
@@ -158,7 +181,19 @@ const Experience = ({ theme }) => {
                                         <div className="py-2 pl-4">
                                             <span className="text-[10px] font-bold text-brown/50 dark:text-primary-cyan/50 uppercase tracking-[0.2em]">{cert.date}</span>
                                             <h4 className="text-lg font-bold text-charcoal dark:text-white leading-tight mt-1 group-hover:text-brown dark:group-hover:text-primary-cyan transition-colors">{cert.title}</h4>
-                                            <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">{cert.provider}</p>
+                                            <div className="flex items-center gap-4 mt-1">
+                                                <p className="text-sm text-gray-500 dark:text-gray-400">{cert.provider}</p>
+                                                {cert.link && (
+                                                    <a 
+                                                        href={cert.link} 
+                                                        target="_blank" 
+                                                        rel="noopener noreferrer"
+                                                        className="text-xs font-bold text-brown dark:text-primary-cyan hover:underline ml-4"
+                                                    >
+                                                        View Certificate
+                                                    </a>
+                                                )}
+                                            </div>
                                         </div>
                                     </motion.div>
                                 ))}
