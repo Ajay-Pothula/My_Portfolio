@@ -2,6 +2,10 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { GraduationCap, School, Award, BookOpen, Briefcase } from 'lucide-react';
 import SpotlightCard from './SpotlightCard';
+import oracleAI from '../assets/oracle_AI.png';
+import googlePy from '../assets/google_py.png';
+import nptelCloud from '../assets/nptel_cloud.png';
+import commCert from '../assets/comm.png';
 
 const Experience = ({ theme }) => {
     const education = [
@@ -33,24 +37,28 @@ const Experience = ({ theme }) => {
             date: "Mar 2026",
             title: "The Science of Well Being",
             provider: "Coursera",
+            image: commCert,
             link: "https://drive.google.com/file/d/1bK_1HnVtBUPW8pe6C_ReBCAC0oVuVKk7/view?usp=sharing"
         },
         {
             date: "Sep 2025",
             title: "Oracle Cloud Infrastructure 2025 AI Foundations Associate",
             provider: "Oracle University",
+            image: oracleAI,
             link: "https://drive.google.com/file/d/1uR61bTJ5D-RhBZhQTK7Ub8iaVJfdxpYY/view?usp=sharing"
         },
         {
             date: "Apr 2025",
             title: "Cloud Computing",
             provider: "NPTEL",
+            image: nptelCloud,
             link: "https://drive.google.com/file/d/1mVgE-syUCibmPrZzCPCPiuvjzSa_EgyC/view?usp=sharing"
         },
         {
             date: "Aug 2024",
             title: "Crash Course on Python",
             provider: "Google (via Coursera)",
+            image: googlePy,
             link: "https://drive.google.com/file/d/163I2WWmYJOouoWYdhksjEzYAsSfMPLBB/view?usp=sharing"
         }
     ];
@@ -76,7 +84,7 @@ const Experience = ({ theme }) => {
                             </div>
                             <h3 className="text-2xl font-bold text-charcoal dark:text-white">Training & Experience</h3>
                         </div>
-                        
+
                         <motion.div
                             initial={{ opacity: 0, x: -20 }}
                             whileInView={{ opacity: 1, x: 0 }}
@@ -89,9 +97,9 @@ const Experience = ({ theme }) => {
                                 <h4 className="text-2xl font-bold text-charcoal dark:text-white mt-2">Guide to Machine Learning with Data Science</h4>
                                 <div className="flex items-center gap-4">
                                     <p className="text-lg font-medium text-brown/80 dark:text-gray-300">Cipher Schools (Edtech Company)</p>
-                                    <a 
-                                        href="https://www.cipherschools.com/certificate/preview?id=687e69327efd6d50907040aa" 
-                                        target="_blank" 
+                                    <a
+                                        href="https://www.cipherschools.com/certificate/preview?id=687e69327efd6d50907040aa"
+                                        target="_blank"
                                         rel="noopener noreferrer"
                                         className="text-xs font-bold text-brown dark:text-primary-cyan hover:underline ml-4"
                                     >
@@ -176,48 +184,54 @@ const Experience = ({ theme }) => {
 
                             <div className="grid sm:grid-cols-2 gap-8">
                                 {certifications.map((cert, idx) => (
-                                    <motion.a
+                                    <motion.div
                                         key={idx}
-                                        href={cert.link}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
                                         initial={{ opacity: 0, y: 30 }}
                                         whileInView={{ opacity: 1, y: 0 }}
                                         whileHover={{ y: -5 }}
-                                        className="group relative h-72 rounded-[2rem] bg-white/50 dark:bg-white/5 border border-brown/10 dark:border-white/10 hover:border-brown dark:hover:border-primary-cyan transition-all p-10 flex flex-col justify-between"
+                                        className="group relative h-72 rounded-[2rem] bg-white/50 dark:bg-white/5 border border-brown/10 dark:border-white/10 hover:border-brown dark:hover:border-primary-cyan transition-all p-10 flex flex-col justify-between overflow-hidden shadow-sm hover:shadow-2xl"
                                     >
-                                        {/* Floating Certificate Preview Overlay */}
-                                        <div className="absolute inset-0 z-0 overflow-hidden rounded-[2rem] pointer-events-none">
-                                            <motion.div 
-                                                className="absolute -right-6 top-1/2 -translate-y-1/2 w-72 h-48 opacity-0 group-hover:opacity-100 group-hover:-rotate-3 translate-x-12 group-hover:translate-x-0 transition-all duration-700 shadow-2xl border-8 border-white dark:border-white/10 rounded-xl hidden lg:block"
+                                        {/* Certificate Image Overlay - Layered BELOW Text */}
+                                        <div className="absolute inset-x-0 inset-y-0 z-0 overflow-hidden pointer-events-none">
+                                            <motion.div
+                                                className="absolute -right-12 top-1/2 -translate-y-1/2 w-[80%] h-[70%] opacity-0 group-hover:opacity-40 group-hover:-rotate-6 translate-x-24 group-hover:translate-x-0 transition-all duration-1000 blur-[1px] group-hover:blur-0"
                                                 style={{
                                                     backgroundImage: `url(${cert.image || 'https://images.unsplash.com/photo-1513258496099-48168024adb0?q=80&w=2070&auto=format&fit=crop'})`,
                                                     backgroundSize: 'cover',
-                                                    backgroundPosition: 'top'
+                                                    backgroundPosition: 'top',
+                                                    boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)'
                                                 }}
                                             />
                                         </div>
-                                        
-                                        <div className="relative z-10 max-w-[65%]">
-                                            <div className="flex items-center gap-2 mb-4">
-                                                <div className="w-2 h-2 rounded-full bg-brown dark:bg-primary-cyan animate-pulse" />
-                                                <span className="text-xs font-bold text-brown/50 dark:text-primary-cyan/50 uppercase tracking-[0.2em]">{cert.date}</span>
+
+                                        {/* Text Info - Layered ABOVE Image */}
+                                        <div className="relative z-20 max-w-[75%] transition-transform duration-500 group-hover:translate-x-2">
+                                            <div className="flex items-center gap-3 mb-4">
+                                                <div className="w-2 h-2 rounded-full bg-brown dark:bg-primary-cyan animate-pulse shadow-[0_0_10px_rgba(0,240,255,0.5)]" />
+                                                <span className="text-xs font-bold text-brown/60 dark:text-primary-cyan/60 uppercase tracking-[0.2em]">{cert.date}</span>
                                             </div>
-                                            <h4 className="text-2xl font-bold text-charcoal dark:text-white leading-tight group-hover:text-brown dark:group-hover:text-primary-cyan transition-colors break-words drop-shadow-sm">
+                                            <h4 className="text-2xl font-bold text-charcoal dark:text-white leading-tight group-hover:text-brown dark:group-hover:text-primary-cyan transition-all duration-300 break-words [text-shadow:_0_1px_20px_rgb(0_0_0_/_10%)] group-hover:[text-shadow:_0_1px_30px_rgb(0_0_0_/_40%)]">
                                                 {cert.title}
                                             </h4>
-                                            <p className="text-sm font-medium text-gray-500 dark:text-gray-400 mt-3">{cert.provider}</p>
+                                            <p className="text-sm font-medium text-gray-500 dark:text-gray-400 mt-4 backdrop-blur-[2px] inline-block py-1 rounded-lg">{cert.provider}</p>
                                         </div>
 
-                                        <div className="relative z-10 flex justify-between items-end">
-                                            <div className="p-4 rounded-2xl bg-brown/10 dark:bg-primary-cyan/10 text-brown dark:text-primary-cyan group-hover:bg-brown dark:group-hover:bg-primary-cyan group-hover:text-white dark:group-hover:text-black transition-all">
+                                        {/* Verify Button - Layered on TOP-most level */}
+                                        <div className="relative z-30 flex justify-between items-end">
+                                            <div className="p-4 rounded-2xl bg-brown/10 dark:bg-primary-cyan/10 text-brown dark:text-primary-cyan group-hover:bg-brown dark:group-hover:bg-primary-cyan group-hover:text-white dark:group-hover:text-black transition-all shadow-lg border border-brown/20 dark:border-primary-cyan/20">
                                                 <Award className="w-6 h-6" />
                                             </div>
-                                            <div className="flex items-center gap-2 px-6 py-3 rounded-full bg-brown dark:bg-primary-cyan text-white dark:text-black opacity-0 group-hover:opacity-100 transition-all translate-y-4 group-hover:translate-y-0 shadow-xl font-bold text-xs uppercase tracking-widest">
+                                            <motion.a 
+                                                href={cert.link}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                whileHover={{ scale: 1.05, backgroundColor: theme === 'dark' ? '#000000' : 'rgba(180, 140, 90, 0.1)' }}
+                                                className="flex items-center gap-2 px-6 py-3 rounded-xl border-2 border-brown dark:border-primary-cyan text-brown dark:text-primary-cyan opacity-0 group-hover:opacity-100 transition-all translate-y-4 group-hover:translate-y-0 shadow-[0_0_20px_rgba(0,240,255,0.1)] font-bold text-[11px] bg-transparent cursor-pointer no-underline"
+                                            >
                                                 Verify Credential
-                                            </div>
+                                            </motion.a>
                                         </div>
-                                    </motion.a>
+                                    </motion.div>
                                 ))}
                             </div>
                         </div>
