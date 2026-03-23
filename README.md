@@ -9,4 +9,4 @@ This is a personal portfolio website built with React and Vite.
 - Framer Motion
 - Three.js / React Three Fiber
 
-Website URL - 
+Website URL - https://ajay-pothula.github.io/My_Portfolio/
