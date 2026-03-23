@@ -20,7 +20,7 @@ const Home = ({ theme, toggleTheme }) => {
             <AboutMe />
             <Skills theme={theme} />
             <Projects theme={theme} />
-            <Achievements />
+            <Achievements theme={theme} />
             <Experience theme={theme} />
             <Contact theme={theme} />
             <footer className="bg-beige/50 dark:bg-card-dark text-brown dark:text-gray-400 py-8 transition-colors border-t border-brown/10 dark:border-white/10">

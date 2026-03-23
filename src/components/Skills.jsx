@@ -75,7 +75,7 @@ const ParallaxText = ({ children, baseVelocity = 100 }) => {
 const Skills = ({ theme }) => {
     const spotlightColor = theme === 'light'
         ? "rgba(180, 140, 90, 0.4)"
-        : "rgba(0, 255, 136, 0.4)";
+        : "rgba(0, 240, 255, 0.4)";
 
     const images = [
         { src: "react.svg", label: "React" },

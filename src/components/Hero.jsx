@@ -4,7 +4,7 @@ import { ArrowDown, Download, Mail, Github, Linkedin } from 'lucide-react';
 import Img from '../assets/my_pic.jpg';
 import leetcodeImg from '../assets/leetcode.png';
 
-const useTypewriter = (words, typingSpeed = 150, deletingSpeed = 100, pauseDuration = 2000) => {
+const useTypewriter = (words, typingSpeed = 50, deletingSpeed = 30, pauseDuration = 1500) => {
     const [index, setIndex] = useState(0);
     const [subIndex, setSubIndex] = useState(0);
     const [reverse, setReverse] = useState(false);
@@ -19,11 +19,15 @@ const useTypewriter = (words, typingSpeed = 150, deletingSpeed = 100, pauseDurat
     }, [blink]);
 
     useEffect(() => {
-        if (subIndex === words[index].length + 1 && !reverse) {
-            setReverse(true);
-            return;
+        // When finished typing a word, pause before reversing
+        if (subIndex === words[index].length && !reverse) {
+            const timeout = setTimeout(() => {
+                setReverse(true);
+            }, pauseDuration);
+            return () => clearTimeout(timeout);
         }
 
+        // When finished deleting a word, move to next
         if (subIndex === 0 && reverse) {
             setReverse(false);
             setIndex((prev) => (prev + 1) % words.length);
@@ -32,27 +36,29 @@ const useTypewriter = (words, typingSpeed = 150, deletingSpeed = 100, pauseDurat
 
         const timeout = setTimeout(() => {
             setSubIndex((prev) => prev + (reverse ? -1 : 1));
-        }, Math.max(reverse ? deletingSpeed : typingSpeed, parseInt(Math.random() * 350)));
+        }, reverse ? deletingSpeed : typingSpeed + Math.random() * 50);
 
         return () => clearTimeout(timeout);
-    }, [subIndex, index, reverse, words, typingSpeed, deletingSpeed]);
+    }, [subIndex, index, reverse, words, typingSpeed, deletingSpeed, pauseDuration]);
 
     return `${words[index].substring(0, subIndex)}${blink ? "|" : " "}`;
 };
+
+const TYPED_WORDS = [
+    "Machine Learning Engineer",
+    "Software Developer",
+    "AI Developer",
+    "Data Science Enthusiast",
+    "Problem Solver",
+    "Tech Enthusiast"
+];
 
 const Hero = ({ theme }) => {
     const imageContainerRef = useRef(null);
     const [glowStyle, setGlowStyle] = useState({ opacity: 0, background: '' });
 
-    // Typing Effect Text
-    const typedText = useTypewriter([
-        "Machine Learning Engineer",
-        "Software Developer",
-        "AI Developer",
-        "Data Science Enthusiast",
-        "Problem Solver",
-        "Tech Enthusiast"
-    ]);
+    // Typing Effect Text - Consistently fast typing and deleting
+    const typedText = useTypewriter(TYPED_WORDS, 60, 60, 2000);
 
     const socialLinks = [
         { icon: <Github size={24} className="text-[#333] dark:text-white" />, url: "https://github.com/ajay-pothula" },

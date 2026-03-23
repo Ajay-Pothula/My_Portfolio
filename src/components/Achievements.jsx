@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Award, Trophy, Code } from 'lucide-react';
 import TiltCard from './TiltCard';
 
-const Achievements = () => {
+const Achievements = ({ theme }) => {
     const achievements = [
         {
             icon: <Code className="w-8 h-8" />,
@@ -45,16 +45,34 @@ const Achievements = () => {
                                 initial={{ opacity: 0, y: 20 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 transition={{ delay: index * 0.1 }}
-                                className="bg-white/50 dark:bg-black/40 backdrop-blur-sm border border-brown/10 dark:border-white/10 p-8 rounded-2xl h-full flex flex-col group hover:border-brown/30 dark:hover:border-primary-cyan/30 transition-colors"
+                                className="relative overflow-hidden bg-white/50 dark:bg-black/40 backdrop-blur-sm border border-brown/10 dark:border-white/10 p-8 rounded-2xl h-full flex flex-col group hover:border-brown/30 dark:hover:border-primary-cyan/30 transition-colors"
                             >
-                                <div className="text-brown dark:text-primary-cyan mb-6 bg-brown/10 dark:bg-primary-cyan/10 w-16 h-16 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
-                                    {item.icon}
+                                {/* Shine Effect Layer */}
+                                <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
+                                    <motion.div
+                                        animate={{
+                                            x: ['-200%', '200%']
+                                        }}
+                                        transition={{
+                                            duration: 1,
+                                            repeat: Infinity,
+                                            repeatDelay: 1.5, // 1 + 1.5 = 2.5s total cycle
+                                            ease: "easeInOut"
+                                        }}
+                                        className={`w-1/2 h-full bg-gradient-to-r from-transparent ${theme === 'dark' ? 'via-primary-cyan/20' : 'via-brown/20'} to-transparent skew-x-[-30deg]`}
+                                    />
                                 </div>
-                                <h3 className="text-xl font-bold text-charcoal dark:text-white mb-3">{item.title}</h3>
-                                <p className="text-gray-600 dark:text-gray-400 mb-6 flex-grow">{item.description}</p>
-                                <span className="text-sm font-mono text-brown dark:text-primary-cyan/80 mt-auto">
-                                    {item.date}
-                                </span>
+
+                                <div className="relative z-10 flex flex-col h-full">
+                                    <div className="text-brown dark:text-primary-cyan mb-6 bg-brown/10 dark:bg-primary-cyan/10 w-16 h-16 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                                        {item.icon}
+                                    </div>
+                                    <h3 className="text-xl font-bold text-charcoal dark:text-white mb-3">{item.title}</h3>
+                                    <p className="text-gray-600 dark:text-gray-400 mb-6 flex-grow">{item.description}</p>
+                                    <span className="text-sm font-mono text-brown dark:text-primary-cyan/80 mt-auto">
+                                        {item.date}
+                                    </span>
+                                </div>
                             </motion.div>
                         </TiltCard>
                     ))}
