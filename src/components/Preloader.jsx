@@ -1,171 +1,230 @@
-import React, { useEffect, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
-const Preloader = ({ finishLoading }) => {
-  const [stage, setStage] = useState('gathering');
+const PARTICLES = Array.from({ length: 60 }, (_, i) => ({
+  id: i,
+  angle: (i / 60) * Math.PI * 2,
+  radius: 80 + Math.random() * 160,
+  size: 1 + Math.random() * 2.5,
+  speed: 0.3 + Math.random() * 0.7,
+  delay: Math.random() * 2,
+}));
+
+const CODE_FRAGMENTS = [
+  { text: "</>", x: -200, y: -120 },
+  { text: "{ }", x: 180, y: -90 },
+  { text: "⚛", x: -160, y: 100 },
+  { text: "λ", x: 200, y: 130 },
+  { text: "[ ]", x: -80, y: -180 },
+  { text: "( )", x: 100, y: 170 },
+  { text: "API", x: -220, y: 10 },
+  { text: "%", x: 230, y: -20 },
+  { text: "∑", x: -40, y: 170 },
+  { text: "π", x: 60, y: -150 },
+];
+
+const Preloader = ({ theme, onComplete }) => {
+  const [phase, setPhase] = useState("gather");
+  const canvasRef = useRef(null);
+  const animationRef = useRef(0);
+
+  const isDark = theme === 'dark';
+
+  // Custom colors mapped from user's theme (respecting both strictly)
+  const bgColor = isDark ? "#0a0a0a" : "#f5f2eb";
+  const primaryColorHex = isDark ? "#00F0FF" : "#8d6e63"; // Electric cyan vs accent brown
 
   useEffect(() => {
-    const timers = [
-      setTimeout(() => setStage('mixing'), 1500),
-      setTimeout(() => setStage('flash'), 3500),
-      setTimeout(() => finishLoading(), 5000)
-    ];
-    return () => timers.forEach(clearTimeout);
-  }, [finishLoading]);
+    // Timings adapted slightly to match React state batching
+    const t1 = setTimeout(() => setPhase("pulse"), 800);
+    const t2 = setTimeout(() => setPhase("text"), 1600);
+    const t3 = setTimeout(() => setPhase("exit"), 3400);
+    const t4 = setTimeout(onComplete, 4200);
+    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); clearTimeout(t4); };
+  }, [onComplete]);
 
-  // Particle variations
-  const particles = Array.from({ length: 24 });
+  // Canvas particle field
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    const resize = () => {
+      canvas.width = window.innerWidth * 2;
+      canvas.height = window.innerHeight * 2;
+      ctx.scale(2, 2);
+    };
+    resize();
+    window.addEventListener("resize", resize);
+
+    let time = 0;
+    const draw = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const cx = window.innerWidth / 2;
+      const cy = window.innerHeight / 2;
+      time += 0.008;
+
+      PARTICLES.forEach((p) => {
+        const t = time * p.speed + p.delay;
+        const currentRadius = p.radius * (phase === "gather" ? 1.5 : phase === "pulse" ? 0.6 + Math.sin(t * 2) * 0.15 : phase === "text" ? 0.4 : 2.5);
+        const x = cx + Math.cos(p.angle + t * 0.5) * currentRadius;
+        const y = cy + Math.sin(p.angle + t * 0.5) * currentRadius;
+        const alpha = phase === "exit" ? Math.max(0, 0.6 - time * 0.3) : 0.4 + Math.sin(t * 3) * 0.4;
+
+        ctx.beginPath();
+        ctx.arc(x, y, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = isDark ? `rgba(0, 240, 255, ${alpha})` : `rgba(141, 110, 99, ${alpha})`;
+        ctx.fill();
+
+        // Connection lines to nearby particles
+        if (p.id % 3 === 0) {
+          const next = PARTICLES[(p.id + 7) % PARTICLES.length];
+          const nt = time * next.speed + next.delay;
+          const nr = next.radius * (phase === "gather" ? 1.5 : phase === "pulse" ? 0.6 : phase === "text" ? 0.4 : 2.5);
+          const nx = cx + Math.cos(next.angle + nt * 0.5) * nr;
+          const ny = cy + Math.sin(next.angle + nt * 0.5) * nr;
+          const dist = Math.sqrt((x - nx) ** 2 + (y - ny) ** 2);
+          if (dist < 200) {
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+            ctx.lineTo(nx, ny);
+            ctx.strokeStyle = isDark ? `rgba(0, 240, 255, ${0.15 * (1 - dist / 200)})` : `rgba(141, 110, 99, ${0.15 * (1 - dist / 200)})`;
+            ctx.lineWidth = 0.5;
+            ctx.stroke();
+          }
+        }
+      });
+
+      animationRef.current = requestAnimationFrame(draw);
+    };
+    draw();
+
+    return () => {
+      window.removeEventListener("resize", resize);
+      cancelAnimationFrame(animationRef.current);
+    };
+  }, [phase, isDark]);
+
+  const currentPhase = phase;
+  const isExiting = currentPhase === "exit";
+  const showText = currentPhase === "text" || isExiting;
 
   return (
-    <div className="fixed inset-0 z-[100] bg-dark-bg flex items-center justify-center overflow-hidden">
-      <AnimatePresence>
-        {stage === 'gathering' && (
-          <div className="relative w-64 h-64">
-            {particles.map((_, i) => (
-              <motion.div
-                key={i}
-                initial={{ 
-                  x: Math.random() * 800 - 400, 
-                  y: Math.random() * 800 - 400,
-                  opacity: 0,
-                  scale: 0
-                }}
-                animate={{ 
-                  x: 0, 
-                  y: 0,
-                  opacity: 1,
-                  scale: [0, 1.2, 1]
-                }}
-                transition={{ 
-                  duration: 1.5,
-                  delay: i * 0.03,
-                  ease: "easeInOut"
-                }}
-                className={`absolute w-2.5 h-2.5 rounded-full ${i % 2 === 0 ? 'bg-primary-cyan' : 'bg-brown'} blur-[2px]`}
-                style={{
-                  left: '50%',
-                  top: '50%'
-                }}
-              />
-            ))}
-          </div>
-        )}
-
-        {stage === 'mixing' && (
-          <motion.div 
-            className="relative"
-            animate={{ 
-              x: [0, -2, 2, -2, 2, 0],
-              y: [0, 2, -2, 2, -2, 0]
-            }}
-            transition={{ duration: 0.3, repeat: Infinity }}
-          >
-            {/* Swirling Vortex */}
-            <motion.div
-              animate={{ rotate: 360, scale: [1, 1.1, 1] }}
-              transition={{ 
-                rotate: { duration: 2, repeat: Infinity, ease: "linear" },
-                scale: { duration: 0.8, repeat: Infinity, ease: "easeInOut" }
-              }}
-              className="w-48 h-48 rounded-full border-t border-primary-cyan shadow-[0_0_40px_rgba(0,240,255,0.4)]"
-            />
-            <motion.div
-              animate={{ rotate: -360 }}
-              transition={{ duration: 2.5, repeat: Infinity, ease: "linear" }}
-              className="absolute inset-0 w-48 h-48 rounded-full border-b border-brown shadow-[0_0_30px_rgba(180,140,90,0.3)]"
-            />
-            
-            {/* Pulsing Core */}
-            <motion.div 
-              animate={{ scale: [1, 1.3, 1], opacity: [0.3, 0.8, 0.3] }}
-              transition={{ duration: 1.2, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute inset-0 m-auto w-6 h-6 bg-white rounded-full blur-md"
-            />
-          </motion.div>
-        )}
-
-        {stage === 'flash' && (
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="absolute inset-0 flex items-center justify-center z-[110] bg-dark-bg px-4"
-          >
-            {/* Soft Cyan Energy Aura */}
-            <motion.div
-              initial={{ scale: 0, opacity: 0.8 }}
-              animate={{ 
-                scale: [0, 80, 150],
-                opacity: [0.8, 0.4, 0] 
-              }}
-              transition={{ duration: 1.5, ease: "easeOut" }}
-              className="absolute w-8 h-8 bg-primary-cyan/30 rounded-full blur-[80px]"
-            />
-            
-            {/* Elegant Welcome Text - "WELCOME TO MY PORTFOLIO" - Word by Word for performance */}
-            <div className="relative z-20 flex flex-col items-center max-w-2xl text-center">
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 1 }}
-                className="flex flex-wrap justify-center gap-x-4 md:gap-x-6"
-              >
-                {"WELCOME TO MY PORTFOLIO".split(" ").map((word, wordIdx) => (
-                  <motion.span 
-                    key={wordIdx}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ 
-                      delay: 0.3 + (wordIdx * 0.15),
-                      duration: 0.8,
-                      ease: [0.16, 1, 0.3, 1] // Super smooth easeOut
-                    }}
-                    className="text-3xl md:text-5xl font-light text-primary-cyan/90 tracking-[0.1em] uppercase italic inline-block"
-                    style={{ 
-                      textShadow: '0 0 30px rgba(0,240,255,0.3)',
-                      willChange: 'transform, opacity'
-                    }}
-                  >
-                    {word}
-                  </motion.span>
-                ))}
-              </motion.div>
-              
-              {/* Subtle line */}
-              <motion.div 
-                initial={{ width: 0, opacity: 0 }}
-                animate={{ width: '40%', opacity: 0.3 }}
-                transition={{ delay: 1.2, duration: 1.2, ease: "easeInOut" }}
-                className="h-[1px] bg-primary-cyan mt-10 shadow-[0_0_10px_rgba(0,240,255,0.2)]"
-              />
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Background Particles/Dust */}
-      <div className="absolute inset-0 pointer-events-none opacity-20">
-        {Array.from({ length: 50 }).map((_, i) => (
-          <motion.div
-            key={`dust-${i}`}
-            initial={{ 
-              x: Math.random() * window.innerWidth, 
-              y: Math.random() * window.innerHeight,
-              opacity: 0 
-            }}
-            animate={{ 
-              y: [null, Math.random() * -100],
-              opacity: [0, 1, 0]
-            }}
-            transition={{ 
-              duration: Math.random() * 2 + 2,
-              repeat: Infinity,
-              delay: Math.random() * 2
-            }}
-            className="w-1 h-1 bg-white rounded-full"
+    <AnimatePresence>
+      {!isExiting && (
+        <motion.div
+          className="fixed inset-0 z-[100] flex items-center justify-center overflow-hidden"
+          style={{ background: bgColor }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        >
+          {/* Canvas particle field */}
+          <canvas
+            ref={canvasRef}
+            className="absolute inset-0 w-full h-full"
+            style={{ opacity: 0.8 }}
           />
-        ))}
-      </div>
-    </div>
+
+          {/* Ambient radial glow */}
+          <motion.div
+            className="absolute rounded-full"
+            style={{
+              width: 500,
+              height: 500,
+              background: isDark
+                ? "radial-gradient(circle, rgba(0, 240, 255, 0.15) 0%, transparent 70%)"
+                : "radial-gradient(circle, rgba(141, 110, 99, 0.15) 0%, transparent 70%)",
+            }}
+            animate={{
+              scale: phase === "pulse" ? [1, 1.3, 1] : phase === "text" ? 1.5 : 1,
+              opacity: currentPhase === "exit" ? 0 : 1,
+            }}
+            transition={{ duration: phase === "pulse" ? 1.5 : 1, ease: "easeInOut", repeat: phase === "pulse" ? Infinity : 0 }}
+          />
+
+          {/* Code fragments that converge to center */}
+          {CODE_FRAGMENTS.map((frag, i) => (
+            <motion.span
+              key={i}
+              className="absolute font-mono text-sm font-semibold select-none z-10"
+              style={{ color: primaryColorHex }}
+              initial={{ opacity: 0, x: frag.x * 1.8, y: frag.y * 1.8, scale: 0.5 }}
+              animate={{
+                opacity: currentPhase === "gather" ? [0, 0.6] : currentPhase === "pulse" ? 0.8 : 0,
+                x: currentPhase === "gather" ? frag.x : currentPhase === "pulse" ? frag.x * 0.3 : 0,
+                y: currentPhase === "gather" ? frag.y : currentPhase === "pulse" ? frag.y * 0.3 : 0,
+                scale: currentPhase === "text" || currentPhase === "exit" ? 0 : 1,
+              }}
+              transition={{
+                duration: 1,
+                delay: i * 0.05,
+                ease: [0.16, 1, 0.3, 1],
+              }}
+            >
+              {frag.text}
+            </motion.span>
+          ))}
+
+          {/* Central core — pulsing dot */}
+          <motion.div
+            className="absolute rounded-full z-20"
+            style={{
+              width: 8,
+              height: 8,
+              background: primaryColorHex,
+              boxShadow: isDark
+                ? "0 0 30px rgba(0,240,255,0.6), 0 0 60px rgba(0,240,255,0.3), 0 0 100px rgba(0,240,255,0.1)"
+                : "0 0 30px rgba(141,110,99,0.5), 0 0 60px rgba(141,110,99,0.3), 0 0 100px rgba(141,110,99,0.1)",
+            }}
+            initial={{ scale: 0 }}
+            animate={{
+              scale: currentPhase === "text" || currentPhase === "exit" ? [1, 0] : [0, 1, 1.5, 1],
+              opacity: currentPhase === "text" ? 0 : 1,
+            }}
+            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+          />
+
+          {/* Expanding ring on pulse */}
+          {phase === "pulse" && (
+            <motion.div
+              className={`absolute rounded-full border ${isDark ? 'border-[#00F0FF]/40' : 'border-[#8d6e63]/40'} z-10`}
+              initial={{ width: 0, height: 0, opacity: 1 }}
+              animate={{ width: 300, height: 300, opacity: 0 }}
+              transition={{ duration: 1.5, ease: "easeOut", repeat: Infinity }}
+            />
+          )}
+
+          {/* Welcome text */}
+          <motion.div
+            className="absolute z-30 text-center pointer-events-none"
+            initial={{ opacity: 0, scale: 0, filter: "blur(20px)" }}
+            animate={
+              showText
+                ? { opacity: 1, scale: 1, filter: "blur(0px)" }
+                : {}
+            }
+            transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <h1
+              className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter"
+              style={{ lineHeight: 0.95, fontFamily: "'Josefin Sans', sans-serif" }}
+            >
+              <span className={isDark ? "text-white" : "text-[#1a1a1a]"}>Welcome</span>
+            </h1>
+            <motion.p
+              className={`text-sm md:text-base font-medium mt-4 tracking-[0.3em] uppercase ${isDark ? "text-primary-cyan" : "text-brown"}`}
+              initial={{ opacity: 0, y: 10 }}
+              animate={showText ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+              style={{ fontFamily: "'Josefin Sans', sans-serif" }}
+            >
+              to my portfolio
+            </motion.p>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 };
 

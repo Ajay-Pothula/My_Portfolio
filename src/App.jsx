@@ -25,7 +25,7 @@ function App() {
     <Router basename={import.meta.env.BASE_URL}>
       <AnimatePresence mode="wait">
         {loading ? (
-          <Preloader key="loader" finishLoading={() => setLoading(false)} />
+          <Preloader key="loader" theme={theme} onComplete={() => setLoading(false)} />
         ) : (
           <motion.div 
             key="content"
