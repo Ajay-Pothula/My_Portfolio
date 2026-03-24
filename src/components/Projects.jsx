@@ -1,9 +1,10 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import { Github, ExternalLink, ArrowUpRight, ArrowDown } from 'lucide-react';
 import documindImg from '../assets/documind.png';
 import newsDigestImg from '../assets/news_digest.png';
 import diabetesPredictorImg from '../assets/diabetes_predictor.png';
+import landchatImg from '../assets/landchat.jpeg';
 
 const projects = [
     {
@@ -16,10 +17,25 @@ const projects = [
             "Implemented smart chunking and PDF parsing with LangChain."
         ],
         tags: ["FastAPI", "React", "LangChain", "ChromaDB", "Groq API"],
-        link: "https://github.com/ajay-pothula",
+        link: "https://github.com/Ajay-Pothula/DocuMind-RAG-Platform",
         liveLink: null,
         date: "March 2026",
         image: documindImg
+    },
+    {
+        title: "LandChat Connect: AI-Powered Real Estate",
+        description: "A comprehensive real estate platform specifically designed for land transactions with an AI-powered assistant.",
+        details: [
+            "Integrated Gemini AI chatbot for specialized land property queries.",
+            "Real-time land valuation and property evaluation assistance.",
+            "Secure authentication and user-specific property management.",
+            "Responsive dashboard for seamless property browsing."
+        ],
+        tags: ["React", "Node.js", "MongoDB", "Gemini AI", "Supabase"],
+        link: "https://github.com/ajay-pothula",
+        liveLink: null,
+        date: "January 2026",
+        image: landchatImg
     },
     {
         title: "AI-Powered Automated Daily News Digest",
@@ -31,7 +47,7 @@ const projects = [
             "Real-time updates with minimal resource consumption."
         ],
         tags: ["Python", "Gemini AI", "JSON", "FeedParser"],
-        link: "https://github.com/ajay-pothula",
+        link: "https://github.com/Ajay-Pothula/AI-Powered-Automated-Daily-News-Digest",
         liveLink: null,
         date: "October 2025",
         image: newsDigestImg
@@ -46,7 +62,7 @@ const projects = [
             "Comprehensive EDA and feature engineering on medical data."
         ],
         tags: ["Python", "Scikit", "Pandas", "Gradio"],
-        link: "https://github.com/ajay-pothula",
+        link: "https://github.com/Ajay-Pothula/-Diabetes-Predictor-Health-Dataset-",
         liveLink: null,
         date: "September 2025",
         image: diabetesPredictorImg
@@ -54,13 +70,17 @@ const projects = [
 ];
 
 const ProjectCard = ({ project, index }) => {
+    const [hovered, setHovered] = useState(false);
+
     return (
-        // Adjusted Dimensions: Increased Width significantly
-        // md:w-[700px] lg:w-[750px]
-        <div className="relative w-[85vw] md:w-[700px] lg:w-[750px] h-[50vh] md:h-[500px] flex-shrink-0 rounded-2xl overflow-hidden bg-white dark:bg-white/5 border border-brown/10 dark:border-white/10 shadow-xl backdrop-blur-sm group hover:border-black dark:hover:border-primary-cyan hover:scale-[1.01] hover:-translate-y-1 transition-all duration-500">
-            {/* Background Image - Adjusted coverage */}
+        <div
+            className="relative w-[85vw] md:w-[700px] lg:w-[750px] h-[50vh] md:h-[500px] flex-shrink-0 rounded-2xl overflow-hidden bg-white dark:bg-white/5 border border-brown/10 dark:border-white/10 shadow-md hover:shadow-xl backdrop-blur-sm group hover:border-brown dark:hover:border-primary-cyan transition-all duration-500"
+            onMouseEnter={() => setHovered(true)}
+            onMouseLeave={() => setHovered(false)}
+        >
+            {/* Background Image */}
             <div className="absolute inset-0 h-[45%] md:h-[60%] overflow-hidden">
-                <div className="absolute inset-0 bg-brown/5 dark:bg-black/20 group-hover:bg-transparent transition-colors duration-500 z-10" />
+                <div className="absolute inset-0 bg-black/5 dark:bg-black/20 group-hover:bg-transparent transition-colors duration-500 z-10" />
                 <img
                     src={project.image}
                     alt={project.title}
@@ -68,64 +88,83 @@ const ProjectCard = ({ project, index }) => {
                 />
             </div>
 
-            {/* Content Container - Bottom 40% */}
-            <div className="absolute bottom-0 left-0 right-0 h-[55%] md:h-[45%] bg-white dark:bg-[#121212] border-t border-brown/10 dark:border-white/10 p-5 md:p-8 flex flex-col justify-between z-20 group-hover:h-[75%] transition-all duration-500 ease-in-out">
-                <div>
-                    <div className="flex items-center justify-between mb-3">
-                        <span className="text-brown dark:text-primary-cyan font-mono text-sm tracking-wide font-semibold">
-                            {project.date}
-                        </span>
-                        <div className="flex gap-4">
-                            {project.liveLink && (
-                                <a
-                                    href={project.liveLink}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="group/link relative text-charcoal/70 dark:text-white/70 hover:text-black dark:hover:text-primary-cyan transition-colors"
-                                >
-                                    <ArrowUpRight size={20} />
-                                    <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 text-xs text-cream bg-charcoal dark:bg-black rounded opacity-0 group-hover/link:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap">
-                                        Live Link
-                                    </span>
-                                </a>
-                            )}
+            {/* Content Panel — expands up on hover */}
+            <div className="absolute bottom-0 left-0 right-0 bg-white dark:bg-[#121212] border-t border-brown/10 dark:border-white/10 z-20 flex flex-col transition-all duration-500 ease-in-out"
+                style={{
+                    height: hovered ? '72%' : '45%',
+                    padding: '20px 28px 18px',
+                }}
+            >
+                {/* Header row: date + icons */}
+                <div className="flex items-center justify-between mb-2 flex-shrink-0">
+                    <span className="text-brown dark:text-primary-cyan font-mono text-sm tracking-wide font-semibold">
+                        {project.date}
+                    </span>
+                    <div className="flex gap-4">
+                        {project.liveLink && (
                             <a
-                                href={project.link}
+                                href={project.liveLink}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="group/link relative text-charcoal/70 dark:text-white/70 hover:text-black dark:hover:text-primary-cyan transition-colors"
+                                className="group/link relative text-brown/70 dark:text-gray-100/70 hover:text-brown dark:hover:text-primary-cyan transition-colors"
                             >
-                                <Github size={20} />
-                                <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 text-xs text-cream bg-charcoal dark:bg-black rounded opacity-0 group-hover/link:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap">
-                                    GitHub
+                                <ArrowUpRight size={20} />
+                                <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 text-xs text-white bg-charcoal dark:bg-black rounded opacity-0 group-hover/link:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap">
+                                    Live Link
                                 </span>
                             </a>
-                        </div>
-                    </div>
-
-                    <h2 className="text-2xl md:text-3xl font-bold text-charcoal dark:text-white mb-3 leading-tight group-hover:text-black dark:group-hover:text-primary-cyan transition-colors">
-                        {project.title}
-                    </h2>
-
-                    <p className="text-brown/80 dark:text-gray-400 text-sm md:text-base line-clamp-2 md:line-clamp-3 leading-relaxed mb-4 group-hover:line-clamp-none transition-all duration-300">
-                        {project.description}
-                    </p>
-
-                    {/* New Detailed Section - Revealed on Hover */}
-                    <div className="opacity-0 group-hover:opacity-100 h-0 group-hover:h-auto overflow-hidden transition-all duration-500 delay-100 mb-4">
-                        <p className="text-xs font-bold text-brown dark:text-primary-cyan uppercase mb-2 tracking-wider">Key Features:</p>
-                        <ul className="space-y-1">
-                            {project.details.map((detail, i) => (
-                                <li key={i} className="text-xs md:text-sm text-gray-600 dark:text-gray-400 flex items-start gap-2">
-                                    <span className="w-1.5 h-1.5 rounded-full bg-brown/50 dark:bg-primary-cyan/50 mt-1.5 flex-shrink-0" />
-                                    {detail}
-                                </li>
-                            ))}
-                        </ul>
+                        )}
+                        <a
+                            href={project.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="group/link relative text-brown/70 dark:text-gray-100/70 hover:text-brown dark:hover:text-primary-cyan transition-colors"
+                        >
+                            <Github size={20} />
+                            <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 text-xs text-white bg-charcoal dark:bg-black rounded opacity-0 group-hover/link:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap">
+                                GitHub
+                            </span>
+                        </a>
                     </div>
                 </div>
 
-                <div className="flex flex-wrap gap-2">
+                {/* Title */}
+                <h2 className="text-2xl md:text-3xl font-bold text-charcoal dark:text-gray-100 mb-2 leading-tight group-hover:text-brown dark:group-hover:text-primary-cyan transition-colors flex-shrink-0">
+                    {project.title}
+                </h2>
+
+                {/* Description */}
+                <p className="text-brown/80 dark:text-gray-400 text-sm md:text-base leading-relaxed mb-3 flex-shrink-0">
+                    {project.description}
+                </p>
+
+                {/* Key Features — revealed on hover */}
+                <div
+                    className="overflow-hidden transition-all duration-500 ease-in-out flex-shrink-0"
+                    style={{
+                        maxHeight: hovered ? '200px' : '0px',
+                        opacity: hovered ? 1 : 0,
+                        marginBottom: hovered ? '24px' : '0px',
+                    }}
+                >
+                    <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-brown dark:text-primary-cyan mb-2">
+                        ✦ Key Features
+                    </p>
+                    <ul className="space-y-1">
+                        {project.details.map((feat, i) => (
+                            <li key={i} className="flex items-start gap-2 group/feat">
+                                {/* Accent dot — matches theme color */}
+                                <span className="mt-[5px] w-1.5 h-1.5 rounded-full flex-shrink-0 bg-brown dark:bg-primary-cyan opacity-60 group-hover/feat:opacity-100 transition-opacity duration-200" />
+                                <span className="text-xs text-brown/80 dark:text-gray-400 leading-snug group-hover/feat:text-brown dark:group-hover/feat:text-primary-cyan transition-colors duration-200">
+                                    {feat}
+                                </span>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+
+                {/* Tags — always visible at bottom */}
+                <div className="flex flex-wrap gap-2 mt-auto flex-shrink-0">
                     {project.tags.map(tag => (
                         <span key={tag} className="text-xs font-medium px-3 py-1 bg-black dark:bg-primary-cyan/5 text-white dark:text-primary-cyan rounded-full border-none dark:border dark:border-primary-cyan/20 transition-colors">
                             {tag}
@@ -148,12 +187,11 @@ const Projects = () => {
 
     useEffect(() => {
         const updateRange = () => {
-            // Mobile: Scroll further to reveal the last card completely
+            // Mobile: Adjusted for 4 cards to prevent trailing gap
             if (window.innerWidth < 768) {
-                // Adjusted to -72% to center the last project card on mobile
                 setScrollRange(["1%", "-72%"]);
             } else {
-                // Desktop: Keep exactly as requested
+                // Desktop: -60% fits 4 projects perfectly in the horizontal track
                 setScrollRange(["1%", "-60%"]);
             }
         };
@@ -166,7 +204,7 @@ const Projects = () => {
     const x = useTransform(scrollYProgress, [0, 1], scrollRange);
 
     return (
-        <section ref={targetRef} id="projects" className="relative h-[300vh] bg-white dark:bg-black transition-colors duration-300">
+        <section ref={targetRef} id="projects" className="relative h-[300vh] bg-white dark:bg-black transition-colors duration-500">
             <div className="sticky top-0 h-screen flex items-center overflow-hidden">
 
                 {/* Large Background Title */}
@@ -183,8 +221,7 @@ const Projects = () => {
                 >
                     {/* Intro Card */}
                     <div className="w-[85vw] md:w-[400px] lg:w-[450px] flex-shrink-0 flex flex-col justify-center text-charcoal dark:text-white p-6 md:p-12 transition-colors duration-300">
-                        <div className="w-12 h-1 bg-brown dark:bg-primary-cyan mb-6 transition-colors duration-300"></div>
-                        {/* Increased Font Size */}
+                        <div className="w-12 h-1 bg-brown dark:bg-primary-cyan mb-6 transition-colors duration-300 shadow-[0_0_10px_rgba(0,240,255,0.3)]"></div>
                         <h3 className="text-5xl md:text-7xl font-bold leading-tight mb-6">
                             Recent <br />
                             <span className="text-brown/60 dark:text-gray-500 transition-colors duration-300">Projects</span>
@@ -192,7 +229,7 @@ const Projects = () => {
                         <p className="text-brown/80 dark:text-gray-400 text-lg mb-8 transition-colors duration-300">
                             Solving complex problems with elegant code.
                         </p>
-                        <div className="flex items-center gap-2 text-sm font-mono animate-blink text-brown dark:text-[#00C2FF] transition-colors duration-300">
+                        <div className="flex items-center gap-2 text-sm font-mono animate-blink text-brown dark:text-primary-cyan transition-colors duration-300">
                             <span>SCROLL TO EXPLORE</span>
                             <ArrowDown className="w-4 h-4" />
                         </div>
