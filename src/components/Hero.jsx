@@ -3,7 +3,6 @@ import { motion } from 'framer-motion';
 import { ArrowDown, Download, Mail, Github, Linkedin } from 'lucide-react';
 import Img from '../assets/my_pic.jpg';
 import leetcodeImg from '../assets/leetcode.png';
-import resumePDF from '../assets/resume.pdf';
 
 const useTypewriter = (words, typingSpeed = 50, deletingSpeed = 30, pauseDuration = 1500) => {
     const [index, setIndex] = useState(0);
@@ -175,7 +174,7 @@ const Hero = ({ theme }) => {
                             <span className="md:hidden">Contact</span>
                         </motion.a>
                         <motion.a
-                            href={resumePDF}
+                            href="/My_Portfolio/resume.pdf"
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
                             download
